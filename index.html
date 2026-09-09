@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chúc Mừng Sinh Nhật Thầy</title>
+    <!-- Thư viện tạo pháo hoa -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap');
+        
+        body, html { margin: 0; padding: 0; width: 100%; height: 100%; font-family: 'Playfair Display', serif; background-color: #fdf6e3; color: #4a3b32; overflow-x: hidden; }
+        .hidden { display: none !important; }
+
+        /* MÀN HÌNH 1: PHÁO HOA */
+        #intro-screen { height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; background: radial-gradient(circle, #fff9e6 0%, #fdf6e3 100%); text-align: center; transition: opacity 1s ease-in-out; }
+        h1 { font-size: 3.5rem; color: #b73229; margin-bottom: 20px; text-shadow: 2px 2px 4px rgba(0,0,0,0.1); }
+        .btn { padding: 12px 30px; font-size: 1.2rem; color: #fff; background-color: #d4af37; border: none; border-radius: 8px; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: all 0.3s ease; font-family: inherit; }
+        .btn:hover { background-color: #bfa145; transform: translateY(-2px); }
+
+        /* MÀN HÌNH 2: THIỆP */
+        #card-screen { min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 40px 20px; background-color: #fdf6e3; }
+        #main-envelope { background: linear-gradient(135deg, #d4af37, #bfa145); width: 90%; max-width: 600px; padding: 50px 20px; border-radius: 12px; text-align: center; cursor: pointer; box-shadow: 0 10px 20px rgba(0,0,0,0.2); transition: transform 0.5s ease; color: white; border: 2px solid #fff; }
+        #main-envelope:hover { transform: scale(1.02); }
+        #main-envelope h2 { font-size: 2rem; margin: 0; font-weight: normal; }
+        
+        #messages-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; width: 100%; max-width: 1000px; margin-top: 30px; opacity: 0; transform: translateY(20px); transition: all 1s ease-in-out; }
+        .message-card { background: #fff; padding: 25px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-left: 5px solid #d4af37; text-align: justify; line-height: 1.6; }
+        .message-card h4 { color: #b73229; margin-top: 0; font-size: 1.2rem; border-bottom: 1px dashed #e0e0e0; padding-bottom: 10px; }
+        .show-messages { opacity: 1 !important; transform: translateY(0) !important; }
+
+        /* KHU VỰC ADMIN */
+        #admin-toggle { position: fixed; bottom: 10px; right: 10px; opacity: 0.2; cursor: pointer; font-size: 0.8rem; }
+        #admin-toggle:hover { opacity: 1; }
+        #admin-panel { width: 100%; max-width: 600px; background: #fff; padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); border: 1px solid #d4af37; }
+        .input-group { margin-bottom: 15px; display: flex; flex-direction: column; }
+        .input-group input, .input-group textarea { padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-family: inherit; }
+    </style>
+</head>
+<body>
+
+    <div id="intro-screen">
+        <h1>Kính Chúc Mừng Sinh Nhật Thầy</h1>
+        <p style="font-size: 1.2rem; margin-bottom: 40px; font-style: italic;">Tuổi mới thêm nhiều an lạc và Phật sự viên thành.</p>
+        <button class="btn" id="btn-open-gift">Mở Quà Từ Chúng Con</button>
+    </div>
+
+    <div id="card-screen" class="hidden">
+        <!-- Khu vực Admin (ẩn đi cho đến khi đăng nhập) -->
+        <div id="admin-panel" class="hidden">
+            <h3 style="color: #b73229; margin-top: 0;">Khu vực Admin - Thêm thiệp mới</h3>
+            <div class="input-group">
+                <input type="text" id="sender-name" placeholder="Tên người gửi (VD: Hiếu Tam)">
+            </div>
+            <div class="input-group">
+                <textarea id="sender-message" rows="3" placeholder="Nội dung lời chúc..."></textarea>
+            </div>
+            <button class="btn" id="btn-add-message" style="font-size: 1rem; padding: 8px 20px;">Thêm thiệp</button>
+            <button class="btn" id="btn-logout" style="font-size: 1rem; padding: 8px 20px; background-color: #666; margin-left: 10px;">Đăng xuất</button>
+        </div>
+
+        <div id="main-envelope">
+            <h2>Nhấn vào đây để mở thiệp</h2>
+            <p style="margin-top: 10px; font-size: 1rem;">(Có một bất ngờ nhỏ từ các thành viên)</p>
+        </div>
+
+        <div id="messages-grid"></div>
+    </div>
+
+    <div id="admin-toggle">🔑 Admin</div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+        import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+
+        // MÃ CẤU HÌNH FIREBASE CỦA BẠN 
+        const firebaseConfig = {
+            apiKey: "AIzaSyAAIEUHQkiBNB5ma1nLUS3y9dzOyDmhRAM",
+            authDomain: "quatangthay.firebaseapp.com",
+            projectId: "quatangthay",
+            storageBucket: "quatangthay.firebasestorage.app",
+            messagingSenderId: "891695748030",
+            appId: "1:891695748030:web:7d7f8b191526c2782c1fef",
+            measurementId: "G-JNY4S2TY1E"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+
+        const introScreen = document.getElementById('intro-screen');
+        const cardScreen = document.getElementById('card-screen');
+        const envelope = document.getElementById('main-envelope');
+        const grid = document.getElementById('messages-grid');
+        const adminPanel = document.getElementById('admin-panel');
+
+        window.onload = () => fireworks();
+
+        document.getElementById('btn-open-gift').addEventListener('click', () => {
+            introScreen.style.display = 'none';
+            cardScreen.classList.remove('hidden');
+            window.scrollTo(0, 0);
+        });
+
+        envelope.addEventListener('click', () => {
+            envelope.style.background = "transparent";
+            envelope.style.color = "#4a3b32";
+            envelope.style.boxShadow = "none";
+            envelope.style.border = "none";
+            envelope.style.cursor = "default";
+            envelope.innerHTML = "<h2 style='color: #b73229;'>Những lời thành kính từ chúng con</h2>";
+            grid.classList.add('show-messages');
+        });
+
+        const q = query(collection(db, "messages"), orderBy("timestamp", "desc"));
+        onSnapshot(q, (snapshot) => {
+            grid.innerHTML = ""; 
+            snapshot.forEach((doc) => {
+                const data = doc.data();
+                const card = document.createElement('div');
+                card.className = 'message-card';
+                card.innerHTML = `<h4>${data.name}</h4><p>${data.message}</p>`;
+                grid.appendChild(card);
+            });
+        });
+
+        document.getElementById('admin-toggle').addEventListener('click', () => {
+            if (!auth.currentUser) {
+                const email = prompt("Email Admin:");
+                const password = prompt("Mật khẩu:");
+                if(email && password) {
+                    signInWithEmailAndPassword(auth, email, password)
+                        .then(() => alert("Đăng nhập thành công! Khu vực thêm thiệp đã mở."))
+                        .catch(err => alert("Đăng nhập thất bại, vui lòng kiểm tra lại tài khoản!"));
+                }
+            }
+        });
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                adminPanel.classList.remove('hidden');
+                document.getElementById('admin-toggle').classList.add('hidden');
+            } else {
+                adminPanel.classList.add('hidden');
+                document.getElementById('admin-toggle').classList.remove('hidden');
+            }
+        });
+
+        document.getElementById('btn-logout').addEventListener('click', () => {
+            signOut(auth).then(() => alert("Đã đăng xuất"));
+        });
+
+        document.getElementById('btn-add-message').addEventListener('click', async () => {
+            const name = document.getElementById('sender-name').value;
+            const message = document.getElementById('sender-message').value;
+            
+            if(!name || !message) { alert("Vui lòng điền đủ thông tin!"); return; }
+
+            try {
+                await addDoc(collection(db, "messages"), { name: name, message: message, timestamp: new Date() });
+                alert("Đã thêm thiệp thành công!");
+                document.getElementById('sender-name').value = '';
+                document.getElementById('sender-message').value = '';
+            } catch (e) { alert("Lỗi khi thêm: " + e.message); }
+        });
+
+        function fireworks() {
+            var duration = 5 * 1000; var animationEnd = Date.now() + duration;
+            var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+            function randomInRange(min, max) { return Math.random() * (max - min) + min; }
+            var interval = setInterval(function() {
+                var timeLeft = animationEnd - Date.now();
+                if (timeLeft <= 0) return clearInterval(interval);
+                var particleCount = 50 * (timeLeft / duration);
+                confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 }, colors: ['#d4af37', '#b73229', '#ffffff'] }));
+                confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 }, colors: ['#d4af37', '#b73229', '#ffffff'] }));
+            }, 250);
+        }
+    </script>
+</body>
+</html>
