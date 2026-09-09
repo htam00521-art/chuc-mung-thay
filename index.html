@@ -10,108 +10,127 @@
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap');
         
         * { box-sizing: border-box; }
-        body, html { margin: 0; padding: 0; width: 100%; height: 100%; font-family: 'Playfair Display', serif; background-color: #fdf6e3; color: #4a3b32; overflow-x: hidden; }
+        body, html { 
+            margin: 0; padding: 0; width: 100%; height: 100%; 
+            font-family: 'Playfair Display', serif; 
+            color: #4a3b32; overflow-x: hidden; 
+            /* CÀI ĐẶT ẢNH NỀN TẠI ĐÂY */
+            background-image: url('image_e03b25.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        
         .hidden { display: none !important; }
 
         /* MÀN HÌNH 1: PHÁO HOA */
-        #intro-screen { height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; background: radial-gradient(circle, #fff9e6 0%, #fdf6e3 100%); text-align: center; transition: opacity 1s ease-in-out; }
-        h1 { font-size: 3.5rem; color: #b73229; margin-bottom: 20px; text-shadow: 2px 2px 4px rgba(0,0,0,0.1); }
-        .btn { padding: 12px 30px; font-size: 1.2rem; color: #fff; background-color: #d4af37; border: none; border-radius: 8px; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: all 0.3s ease; font-family: inherit; }
-        .btn:hover:not(:disabled) { background-color: #bfa145; transform: translateY(-2px); }
-        .btn:disabled { background-color: #ccc; cursor: wait; }
+        #intro-screen { 
+            height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; 
+            background: rgba(0, 0, 0, 0.3); /* Phủ một lớp đen mờ để chữ nổi bật trên nền ảnh */
+            text-align: center; transition: opacity 1s ease-in-out; 
+            padding: 20px;
+        }
+        h1 { font-size: 3.5rem; color: #fff; margin-bottom: 20px; text-shadow: 2px 2px 8px rgba(0,0,0,0.6); }
+        .intro-text { font-size: 1.2rem; margin-bottom: 40px; font-style: italic; color: #fff; text-shadow: 1px 1px 4px rgba(0,0,0,0.6); }
+        .btn { 
+            padding: 12px 30px; font-size: 1.2rem; color: #fff; background-color: rgba(212, 175, 55, 0.9); 
+            border: 1px solid rgba(255,255,255,0.5); border-radius: 8px; cursor: pointer; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3); transition: all 0.3s ease; font-family: inherit; 
+            backdrop-filter: blur(5px);
+        }
+        .btn:hover:not(:disabled) { background-color: rgba(191, 161, 69, 1); transform: translateY(-2px); }
+        .btn:disabled { background-color: rgba(204, 204, 204, 0.8); cursor: wait; }
 
         /* MÀN HÌNH 2: THIỆP */
-        #card-screen { min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 40px 20px; background-color: #fdf6e3; }
-        #main-envelope { background: linear-gradient(135deg, #d4af37, #bfa145); width: 90%; max-width: 600px; padding: 50px 20px; border-radius: 12px; text-align: center; cursor: pointer; box-shadow: 0 10px 20px rgba(0,0,0,0.2); transition: transform 0.5s ease; color: white; border: 2px solid #fff; margin-bottom: 20px; }
+        #card-screen { min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 40px 20px; background: rgba(0,0,0,0.1); }
+        
+        /* HIỆU ỨNG LIQUID GLASS (KÍNH MỜ) CHUNG */
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+        }
+
+        #main-envelope { 
+            width: 90%; max-width: 600px; padding: 50px 20px; border-radius: 12px; text-align: center; 
+            cursor: pointer; transition: transform 0.5s ease; margin-bottom: 20px; color: #222;
+        }
         #main-envelope:hover { transform: scale(1.02); }
-        #main-envelope h2 { font-size: 2rem; margin: 0; font-weight: normal; }
+        #main-envelope h2 { font-size: 2rem; margin: 0; font-weight: normal; text-shadow: 1px 1px 2px rgba(255,255,255,0.8); }
         
         #messages-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; width: 100%; max-width: 1000px; margin-top: 20px; opacity: 0; transform: translateY(20px); transition: all 1s ease-in-out; }
         .show-messages { opacity: 1 !important; transform: translateY(0) !important; }
 
         /* --- HIỆU ỨNG LẬT THIỆP 3D --- */
         .message-card {
-            background-color: transparent;
-            width: 100%;
-            height: 320px;
-            perspective: 1000px;
-            cursor: pointer;
+            background-color: transparent; width: 100%; height: 320px; perspective: 1000px; cursor: pointer; position: relative;
         }
-
         .card-inner {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            text-align: center;
-            transition: transform 0.8s;
-            transform-style: preserve-3d;
+            position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.8s; transform-style: preserve-3d;
         }
-
         .message-card.flipped .card-inner { transform: rotateY(180deg); }
 
         .card-front, .card-back {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            padding: 20px;
+            position: absolute; width: 100%; height: 100%; -webkit-backface-visibility: hidden; backface-visibility: hidden;
+            border-radius: 15px; padding: 20px;
         }
 
-        /* Mặt trước */
+        /* Mặt trước (Kính mờ) */
         .card-front {
-            background: linear-gradient(135deg, #fffcf5, #f4e6c3);
-            border: 2px dashed #d4af37;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: #b73229;
+            display: flex; flex-direction: column; align-items: center; justify-content: center; color: #b73229;
+            /* Phủ thêm lớp gradient nhẹ để dễ đọc chữ */
+            background: linear-gradient(135deg, rgba(255,255,255,0.6), rgba(255,255,255,0.3));
         }
-        .sender-avatar { width: 90px; height: 90px; border-radius: 50%; object-fit: cover; border: 3px solid #d4af37; box-shadow: 0 4px 8px rgba(0,0,0,0.1); margin-bottom: 10px; }
-        .card-front h3 { margin: 10px 0; font-size: 1.5rem; }
-        .card-front p { margin: 0; font-size: 0.9rem; color: #888; font-style: italic; }
+        .sender-avatar { width: 90px; height: 90px; border-radius: 50%; object-fit: cover; border: 3px solid rgba(255,255,255,0.8); box-shadow: 0 4px 8px rgba(0,0,0,0.1); margin-bottom: 10px; }
+        .card-front h3 { margin: 10px 0; font-size: 1.5rem; text-shadow: 1px 1px 2px rgba(255,255,255,0.5); }
+        .card-front p { margin: 0; font-size: 0.9rem; color: #555; font-style: italic; }
 
-        /* Mặt sau */
+        /* Mặt sau (Kính mờ) */
         .card-back {
-            background: #fff;
-            border-left: 6px solid #d4af37;
-            transform: rotateY(180deg);
-            text-align: justify;
-            display: flex;
-            flex-direction: column;
+            transform: rotateY(180deg); text-align: justify; display: flex; flex-direction: column;
+            background: linear-gradient(135deg, rgba(255,255,255,0.75), rgba(255,255,255,0.5));
+            border-left: 6px solid rgba(212, 175, 55, 0.8);
         }
-        .card-back h4 { color: #b73229; margin-top: 0; font-size: 1.2rem; border-bottom: 1px dashed #e0e0e0; padding-bottom: 10px; text-align: left; }
+        .card-back h4 { color: #b73229; margin-top: 0; font-size: 1.2rem; border-bottom: 1px dashed rgba(0,0,0,0.2); padding-bottom: 10px; text-align: left; }
         .card-content { flex-grow: 1; overflow-y: auto; padding-right: 5px; }
-        .card-content p { line-height: 1.6; font-size: 1.05rem; color: #4a3b32; margin-top: 0; }
+        .card-content p { line-height: 1.6; font-size: 1.05rem; color: #222; margin-top: 0; text-shadow: 1px 1px 1px rgba(255,255,255,0.5); }
         
-        /* Custom scrollbar */
         .card-content::-webkit-scrollbar { width: 5px; }
-        .card-content::-webkit-scrollbar-thumb { background: #d4af37; border-radius: 3px; }
+        .card-content::-webkit-scrollbar-thumb { background: rgba(212, 175, 55, 0.8); border-radius: 3px; }
+
+        /* NÚT XÓA THIỆP (Chỉ hiện khi là Admin) */
+        .btn-delete {
+            position: absolute; top: -10px; right: -10px; background: #e74c3c; color: white; border: none; 
+            border-radius: 50%; width: 30px; height: 30px; font-size: 14px; cursor: pointer; z-index: 10;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3); display: none; /* Mặc định ẩn */
+        }
+        .btn-delete:hover { background: #c0392b; transform: scale(1.1); }
+        body.is-admin .btn-delete { display: block; } /* Hiện lên khi có class is-admin ở thẻ body */
 
         /* KHU VỰC ADMIN */
         #admin-toggle { position: fixed; bottom: 10px; right: 10px; opacity: 0.3; cursor: pointer; font-size: 0.8rem; z-index: 100; padding: 5px; background: rgba(255,255,255,0.7); border-radius: 5px;}
         #admin-toggle:hover { opacity: 1; }
-        #admin-panel { width: 100%; max-width: 600px; background: #fff; padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); border: 1px solid #d4af37; text-align: left; }
+        #admin-panel { width: 100%; max-width: 600px; padding: 25px; margin-bottom: 20px; border-radius: 12px; text-align: left; }
         .input-group { margin-bottom: 15px; display: flex; flex-direction: column; }
-        .input-group label { margin-bottom: 5px; font-weight: bold; color: #b73229; font-size: 0.9rem; }
-        .input-group input[type="text"], .input-group textarea { padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-family: inherit; }
+        .input-group label { margin-bottom: 5px; font-weight: bold; color: #b73229; font-size: 0.9rem; text-shadow: 1px 1px 2px rgba(255,255,255,0.5); }
+        .input-group input[type="text"], .input-group textarea { padding: 10px; border: 1px solid rgba(255,255,255,0.5); border-radius: 6px; font-family: inherit; background: rgba(255,255,255,0.6); }
+        .input-group input:focus, .input-group textarea:focus { outline: none; background: rgba(255,255,255,0.9); }
     </style>
 </head>
 <body>
 
     <div id="intro-screen">
         <h1>Kính Chúc Mừng Sinh Nhật Thầy</h1>
-        <p style="font-size: 1.2rem; margin-bottom: 40px; font-style: italic;">Tuổi mới thêm nhiều an lạc và Phật sự viên thành.</p>
+        <p class="intro-text">Tuổi mới thêm nhiều an lạc và Phật sự viên thành.</p>
         <button class="btn" id="btn-open-gift">Mở Quà Từ Chúng Con</button>
     </div>
 
     <div id="card-screen" class="hidden">
         <!-- Khu vực Admin -->
-        <div id="admin-panel" class="hidden">
-            <h3 style="color: #b73229; margin-top: 0; text-align: center;">Khu vực Admin - Thêm thiệp mới</h3>
+        <div id="admin-panel" class="hidden glass-effect">
+            <h3 style="color: #b73229; margin-top: 0; text-align: center; text-shadow: 1px 1px 2px rgba(255,255,255,0.8);">Khu vực Admin - Thêm thiệp mới</h3>
             <div class="input-group">
                 <label>Tên người gửi (*)</label>
                 <input type="text" id="sender-name" placeholder="VD: Hiếu Tam">
@@ -130,11 +149,11 @@
             </div>
             <div style="text-align: center; margin-top: 20px;">
                 <button class="btn" id="btn-add-message" style="font-size: 1rem; padding: 8px 20px;">Thêm thiệp</button>
-                <button class="btn" id="btn-logout" style="font-size: 1rem; padding: 8px 20px; background-color: #666; margin-left: 10px;">Đăng xuất</button>
+                <button class="btn" id="btn-logout" style="font-size: 1rem; padding: 8px 20px; background-color: rgba(100,100,100,0.8); margin-left: 10px;">Đăng xuất</button>
             </div>
         </div>
 
-        <div id="main-envelope">
+        <div id="main-envelope" class="glass-effect">
             <h2>Nhấn vào đây để xem các thiệp</h2>
             <p style="margin-top: 10px; font-size: 1rem;">(Có một bất ngờ nhỏ từ các thành viên)</p>
         </div>
@@ -146,7 +165,8 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+        // Bổ sung thêm hàm deleteDoc và doc để hỗ trợ Xóa thiệp
+        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
         import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 
         // MÃ CẤU HÌNH FIREBASE CỦA BẠN 
@@ -179,12 +199,11 @@
         });
 
         envelope.addEventListener('click', () => {
-            envelope.style.background = "transparent";
-            envelope.style.color = "#4a3b32";
+            envelope.style.background = "rgba(255,255,255,0.2)";
             envelope.style.boxShadow = "none";
             envelope.style.border = "none";
             envelope.style.cursor = "default";
-            envelope.innerHTML = "<h2 style='color: #b73229;'>Danh sách thiệp chúc mừng</h2><p style='color: #666;'>(Thầy hãy nhấp vào từng thiệp để mở ra nhé)</p>";
+            envelope.innerHTML = "<h2 style='color: #fff; text-shadow: 2px 2px 4px rgba(0,0,0,0.8);'>Danh sách thiệp chúc mừng</h2><p style='color: #eee;'>(Thầy hãy nhấp vào từng thiệp để mở ra nhé)</p>";
             grid.classList.add('show-messages');
         });
 
@@ -192,62 +211,83 @@
         const q = query(collection(db, "messages"), orderBy("timestamp", "desc"));
         onSnapshot(q, (snapshot) => {
             grid.innerHTML = ""; 
-            snapshot.forEach((doc) => {
-                const data = doc.data();
+            snapshot.forEach((documentSnapshot) => {
+                const data = documentSnapshot.data();
+                const docId = documentSnapshot.id; // Lấy ID của thiệp để phục vụ tính năng Xóa
                 
                 const card = document.createElement('div');
                 card.className = 'message-card';
+
+                // Nút Xóa (Chỉ hoạt động khi ở chế độ Admin)
+                const deleteBtn = document.createElement('button');
+                deleteBtn.className = 'btn-delete';
+                deleteBtn.innerHTML = '❌';
+                deleteBtn.title = 'Xóa thiệp này';
+                
+                // Sự kiện xóa thiệp
+                deleteBtn.addEventListener('click', async (e) => {
+                    e.stopPropagation(); // Ngăn việc bấm nút xóa làm lật thiệp
+                    if(confirm(`Bạn có chắc chắn muốn xóa thiệp của "${data.name}" không?`)) {
+                        try {
+                            await deleteDoc(doc(db, "messages", docId));
+                            // Firebase onSnapshot sẽ tự động làm mới giao diện, không cần reload trang
+                        } catch (error) {
+                            alert("Lỗi khi xóa: " + error.message);
+                        }
+                    }
+                });
+
+                card.appendChild(deleteBtn);
+
+                // Sự kiện lật thiệp
                 card.addEventListener('click', function() {
                     this.classList.toggle('flipped');
                 });
 
-                // Kiểm tra xem có link ảnh hay không
                 let imageHtml = (data.imageUrl && data.imageUrl.trim() !== "") 
                     ? `<img src="${data.imageUrl}" class="sender-avatar" alt="Avatar">` 
                     : `<span style="font-size: 2.5rem; margin-bottom: 10px;">💌</span>`;
                 
-                // Kiểm tra xem có link ghi âm hay không
                 let audioHtml = (data.audioUrl && data.audioUrl.trim() !== "") 
-                    ? `<div style="margin-top: 10px; padding-top: 10px; border-top: 1px dashed #e0e0e0;">
-                           <audio controls style="width: 100%; height: 35px;" class="audio-player">
+                    ? `<div style="margin-top: 10px; padding-top: 10px; border-top: 1px dashed rgba(0,0,0,0.2);">
+                           <audio controls style="width: 100%; height: 35px; opacity: 0.8;" class="audio-player">
                                <source src="${data.audioUrl}">
                            </audio>
                        </div>` 
                     : ``;
 
-                card.innerHTML = `
-                    <div class="card-inner">
-                        <!-- MẶT TRƯỚC -->
-                        <div class="card-front">
-                            ${imageHtml}
-                            <p style="margin-top: 5px;">Thiệp gửi từ:</p>
-                            <h3>${data.name}</h3>
-                            <p>(Nhấp để mở thiệp)</p>
+                const innerDiv = document.createElement('div');
+                innerDiv.className = 'card-inner';
+                innerDiv.innerHTML = `
+                    <!-- MẶT TRƯỚC -->
+                    <div class="card-front glass-effect">
+                        ${imageHtml}
+                        <p style="margin-top: 5px;">Thiệp gửi từ:</p>
+                        <h3>${data.name}</h3>
+                        <p>(Nhấp để mở thiệp)</p>
+                    </div>
+                    
+                    <!-- MẶT SAU -->
+                    <div class="card-back glass-effect">
+                        <h4>${data.name}</h4>
+                        <div class="card-content">
+                            <p>${data.message.replace(/\n/g, '<br>')}</p>
                         </div>
-                        
-                        <!-- MẶT SAU -->
-                        <div class="card-back">
-                            <h4>${data.name}</h4>
-                            <div class="card-content">
-                                <p>${data.message.replace(/\n/g, '<br>')}</p>
-                            </div>
-                            ${audioHtml}
-                        </div>
+                        ${audioHtml}
                     </div>
                 `;
+                card.appendChild(innerDiv);
                 grid.appendChild(card);
 
-                // Ngăn chặn việc lật thiệp khi bấm vào thanh play nhạc
+                // Ngăn chặn việc lật thiệp khi bấm vào thanh nhạc
                 const audioPlayer = card.querySelector('.audio-player');
                 if (audioPlayer) {
-                    audioPlayer.addEventListener('click', (e) => {
-                        e.stopPropagation(); 
-                    });
+                    audioPlayer.addEventListener('click', (e) => { e.stopPropagation(); });
                 }
             });
         });
 
-        // ĐĂNG NHẬP ADMIN
+        // ĐĂNG NHẬP ADMIN & QUẢN LÝ TRẠNG THÁI
         document.getElementById('admin-toggle').addEventListener('click', () => {
             if (!auth.currentUser) {
                 const email = prompt("Email Admin:");
@@ -260,18 +300,21 @@
             }
         });
 
+        // Khi trạng thái đăng nhập thay đổi
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 adminPanel.classList.remove('hidden');
                 document.getElementById('admin-toggle').classList.add('hidden');
+                document.body.classList.add('is-admin'); // Kích hoạt class để hiện nút Xóa
             } else {
                 adminPanel.classList.add('hidden');
                 document.getElementById('admin-toggle').classList.remove('hidden');
+                document.body.classList.remove('is-admin'); // Ẩn nút Xóa
             }
         });
 
         document.getElementById('btn-logout').addEventListener('click', () => {
-            signOut(auth).then(() => alert("Đã đăng xuất"));
+            signOut(auth).then(() => alert("Đã đăng xuất."));
         });
 
         // THÊM THIỆP MỚI BẰNG LINK URL
@@ -288,7 +331,6 @@
             btn.disabled = true;
 
             try {
-                // Lưu thẳng dữ liệu vào Firestore Database
                 await addDoc(collection(db, "messages"), { 
                     name: name, 
                     message: message, 
@@ -298,8 +340,6 @@
                 });
 
                 alert("Đã thêm thiệp thành công!");
-                
-                // Xóa trắng form sau khi thêm
                 document.getElementById('sender-name').value = '';
                 document.getElementById('sender-message').value = '';
                 document.getElementById('sender-image').value = '';
@@ -320,8 +360,8 @@
                 var timeLeft = animationEnd - Date.now();
                 if (timeLeft <= 0) return clearInterval(interval);
                 var particleCount = 50 * (timeLeft / duration);
-                confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 }, colors: ['#d4af37', '#b73229', '#ffffff'] }));
-                confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 }, colors: ['#d4af37', '#b73229', '#ffffff'] }));
+                confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 }, colors: ['#f4e6c3', '#b73229', '#ffffff'] }));
+                confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 }, colors: ['#f4e6c3', '#b73229', '#ffffff'] }));
             }, 250);
         }
     </script>
