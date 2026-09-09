@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chúc Mừng Sinh Nhật Thầy</title>
+    <!-- Thư viện tạo pháo hoa -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap');
@@ -16,7 +17,8 @@
         #intro-screen { height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; background: radial-gradient(circle, #fff9e6 0%, #fdf6e3 100%); text-align: center; transition: opacity 1s ease-in-out; }
         h1 { font-size: 3.5rem; color: #b73229; margin-bottom: 20px; text-shadow: 2px 2px 4px rgba(0,0,0,0.1); }
         .btn { padding: 12px 30px; font-size: 1.2rem; color: #fff; background-color: #d4af37; border: none; border-radius: 8px; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: all 0.3s ease; font-family: inherit; }
-        .btn:hover { background-color: #bfa145; transform: translateY(-2px); }
+        .btn:hover:not(:disabled) { background-color: #bfa145; transform: translateY(-2px); }
+        .btn:disabled { background-color: #ccc; cursor: wait; }
 
         /* MÀN HÌNH 2: THIỆP */
         #card-screen { min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 40px 20px; background-color: #fdf6e3; }
@@ -31,7 +33,7 @@
         .message-card {
             background-color: transparent;
             width: 100%;
-            height: 280px; /* Chiều cao cố định cho thiệp */
+            height: 320px;
             perspective: 1000px;
             cursor: pointer;
         }
@@ -45,10 +47,7 @@
             transform-style: preserve-3d;
         }
 
-        /* Lớp này sẽ được thêm vào bằng Javascript khi click */
-        .message-card.flipped .card-inner {
-            transform: rotateY(180deg);
-        }
+        .message-card.flipped .card-inner { transform: rotateY(180deg); }
 
         .card-front, .card-back {
             position: absolute;
@@ -61,7 +60,7 @@
             padding: 20px;
         }
 
-        /* Mặt trước của thiệp (Thiệp đang đóng) */
+        /* Mặt trước */
         .card-front {
             background: linear-gradient(135deg, #fffcf5, #f4e6c3);
             border: 2px dashed #d4af37;
@@ -71,30 +70,34 @@
             justify-content: center;
             color: #b73229;
         }
+        .sender-avatar { width: 90px; height: 90px; border-radius: 50%; object-fit: cover; border: 3px solid #d4af37; box-shadow: 0 4px 8px rgba(0,0,0,0.1); margin-bottom: 10px; }
         .card-front h3 { margin: 10px 0; font-size: 1.5rem; }
         .card-front p { margin: 0; font-size: 0.9rem; color: #888; font-style: italic; }
 
-        /* Mặt sau của thiệp (Nội dung lời chúc) */
+        /* Mặt sau */
         .card-back {
             background: #fff;
             border-left: 6px solid #d4af37;
             transform: rotateY(180deg);
             text-align: justify;
-            overflow-y: auto; /* Thêm thanh cuộn nếu lời chúc quá dài */
+            display: flex;
+            flex-direction: column;
         }
         .card-back h4 { color: #b73229; margin-top: 0; font-size: 1.2rem; border-bottom: 1px dashed #e0e0e0; padding-bottom: 10px; text-align: left; }
-        .card-back p { line-height: 1.6; font-size: 1.05rem; color: #4a3b32; }
+        .card-content { flex-grow: 1; overflow-y: auto; padding-right: 5px; }
+        .card-content p { line-height: 1.6; font-size: 1.05rem; color: #4a3b32; margin-top: 0; }
         
-        /* Tùy chỉnh thanh cuộn cho mặt sau */
-        .card-back::-webkit-scrollbar { width: 6px; }
-        .card-back::-webkit-scrollbar-thumb { background: #d4af37; border-radius: 3px; }
+        /* Custom scrollbar */
+        .card-content::-webkit-scrollbar { width: 5px; }
+        .card-content::-webkit-scrollbar-thumb { background: #d4af37; border-radius: 3px; }
 
         /* KHU VỰC ADMIN */
-        #admin-toggle { position: fixed; bottom: 10px; right: 10px; opacity: 0.2; cursor: pointer; font-size: 0.8rem; z-index: 100; padding: 5px; background: rgba(255,255,255,0.5); border-radius: 5px;}
+        #admin-toggle { position: fixed; bottom: 10px; right: 10px; opacity: 0.3; cursor: pointer; font-size: 0.8rem; z-index: 100; padding: 5px; background: rgba(255,255,255,0.7); border-radius: 5px;}
         #admin-toggle:hover { opacity: 1; }
-        #admin-panel { width: 100%; max-width: 600px; background: #fff; padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); border: 1px solid #d4af37; }
+        #admin-panel { width: 100%; max-width: 600px; background: #fff; padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); border: 1px solid #d4af37; text-align: left; }
         .input-group { margin-bottom: 15px; display: flex; flex-direction: column; }
-        .input-group input, .input-group textarea { padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-family: inherit; }
+        .input-group label { margin-bottom: 5px; font-weight: bold; color: #b73229; font-size: 0.9rem; }
+        .input-group input[type="text"], .input-group textarea { padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-family: inherit; }
     </style>
 </head>
 <body>
@@ -108,15 +111,27 @@
     <div id="card-screen" class="hidden">
         <!-- Khu vực Admin -->
         <div id="admin-panel" class="hidden">
-            <h3 style="color: #b73229; margin-top: 0;">Khu vực Admin - Thêm thiệp mới</h3>
+            <h3 style="color: #b73229; margin-top: 0; text-align: center;">Khu vực Admin - Thêm thiệp mới</h3>
             <div class="input-group">
-                <input type="text" id="sender-name" placeholder="Tên người gửi (VD: Hiếu Tam)">
+                <label>Tên người gửi (*)</label>
+                <input type="text" id="sender-name" placeholder="VD: Hiếu Tam">
             </div>
             <div class="input-group">
-                <textarea id="sender-message" rows="3" placeholder="Nội dung lời chúc..."></textarea>
+                <label>Nội dung lời chúc (*)</label>
+                <textarea id="sender-message" rows="3" placeholder="Nhập lời chúc..."></textarea>
             </div>
-            <button class="btn" id="btn-add-message" style="font-size: 1rem; padding: 8px 20px;">Thêm thiệp</button>
-            <button class="btn" id="btn-logout" style="font-size: 1rem; padding: 8px 20px; background-color: #666; margin-left: 10px;">Đăng xuất</button>
+            <div class="input-group">
+                <label>Link ảnh đại diện (Tùy chọn)</label>
+                <input type="text" id="sender-image" placeholder="Dán link ảnh vào đây (VD: https://...)">
+            </div>
+            <div class="input-group">
+                <label>Link file ghi âm/nhạc (Tùy chọn)</label>
+                <input type="text" id="sender-audio" placeholder="Dán link âm thanh vào đây (VD: https://...)">
+            </div>
+            <div style="text-align: center; margin-top: 20px;">
+                <button class="btn" id="btn-add-message" style="font-size: 1rem; padding: 8px 20px;">Thêm thiệp</button>
+                <button class="btn" id="btn-logout" style="font-size: 1rem; padding: 8px 20px; background-color: #666; margin-left: 10px;">Đăng xuất</button>
+            </div>
         </div>
 
         <div id="main-envelope">
@@ -124,7 +139,6 @@
             <p style="margin-top: 10px; font-size: 1rem;">(Có một bất ngờ nhỏ từ các thành viên)</p>
         </div>
 
-        <!-- Chứa các thiệp -->
         <div id="messages-grid"></div>
     </div>
 
@@ -135,6 +149,7 @@
         import { getFirestore, collection, addDoc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
         import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 
+        // MÃ CẤU HÌNH FIREBASE CỦA BẠN 
         const firebaseConfig = {
             apiKey: "AIzaSyAAIEUHQkiBNB5ma1nLUS3y9dzOyDmhRAM",
             authDomain: "quatangthay.firebaseapp.com",
@@ -173,43 +188,66 @@
             grid.classList.add('show-messages');
         });
 
-        // HÀM HIỂN THỊ THIỆP VÀ XỬ LÝ LẬT THIỆP
+        // HÀM TẢI DỮ LIỆU & HIỂN THỊ THIỆP
         const q = query(collection(db, "messages"), orderBy("timestamp", "desc"));
         onSnapshot(q, (snapshot) => {
             grid.innerHTML = ""; 
             snapshot.forEach((doc) => {
                 const data = doc.data();
                 
-                // Tạo thẻ lật 3D
                 const card = document.createElement('div');
                 card.className = 'message-card';
-                
-                // Thêm sự kiện click để lật thiệp
                 card.addEventListener('click', function() {
                     this.classList.toggle('flipped');
                 });
 
+                // Kiểm tra xem có link ảnh hay không
+                let imageHtml = (data.imageUrl && data.imageUrl.trim() !== "") 
+                    ? `<img src="${data.imageUrl}" class="sender-avatar" alt="Avatar">` 
+                    : `<span style="font-size: 2.5rem; margin-bottom: 10px;">💌</span>`;
+                
+                // Kiểm tra xem có link ghi âm hay không
+                let audioHtml = (data.audioUrl && data.audioUrl.trim() !== "") 
+                    ? `<div style="margin-top: 10px; padding-top: 10px; border-top: 1px dashed #e0e0e0;">
+                           <audio controls style="width: 100%; height: 35px;" class="audio-player">
+                               <source src="${data.audioUrl}">
+                           </audio>
+                       </div>` 
+                    : ``;
+
                 card.innerHTML = `
                     <div class="card-inner">
-                        <!-- MẶT TRƯỚC (ĐÓNG) -->
+                        <!-- MẶT TRƯỚC -->
                         <div class="card-front">
-                            <span style="font-size: 2rem;">💌</span>
-                            <p style="margin-top: 10px;">Thiệp gửi từ:</p>
+                            ${imageHtml}
+                            <p style="margin-top: 5px;">Thiệp gửi từ:</p>
                             <h3>${data.name}</h3>
                             <p>(Nhấp để mở thiệp)</p>
                         </div>
                         
-                        <!-- MẶT SAU (MỞ NỘI DUNG) -->
+                        <!-- MẶT SAU -->
                         <div class="card-back">
                             <h4>${data.name}</h4>
-                            <p>${data.message.replace(/\n/g, '<br>')}</p>
+                            <div class="card-content">
+                                <p>${data.message.replace(/\n/g, '<br>')}</p>
+                            </div>
+                            ${audioHtml}
                         </div>
                     </div>
                 `;
                 grid.appendChild(card);
+
+                // Ngăn chặn việc lật thiệp khi bấm vào thanh play nhạc
+                const audioPlayer = card.querySelector('.audio-player');
+                if (audioPlayer) {
+                    audioPlayer.addEventListener('click', (e) => {
+                        e.stopPropagation(); 
+                    });
+                }
             });
         });
 
+        // ĐĂNG NHẬP ADMIN
         document.getElementById('admin-toggle').addEventListener('click', () => {
             if (!auth.currentUser) {
                 const email = prompt("Email Admin:");
@@ -236,18 +274,42 @@
             signOut(auth).then(() => alert("Đã đăng xuất"));
         });
 
+        // THÊM THIỆP MỚI BẰNG LINK URL
         document.getElementById('btn-add-message').addEventListener('click', async () => {
             const name = document.getElementById('sender-name').value;
             const message = document.getElementById('sender-message').value;
+            const imageUrl = document.getElementById('sender-image').value;
+            const audioUrl = document.getElementById('sender-audio').value;
             
-            if(!name || !message) { alert("Vui lòng điền đủ thông tin!"); return; }
+            if(!name || !message) { alert("Vui lòng điền tên và lời chúc!"); return; }
+
+            const btn = document.getElementById('btn-add-message');
+            btn.innerText = "Đang thêm thiệp...";
+            btn.disabled = true;
 
             try {
-                await addDoc(collection(db, "messages"), { name: name, message: message, timestamp: new Date() });
+                // Lưu thẳng dữ liệu vào Firestore Database
+                await addDoc(collection(db, "messages"), { 
+                    name: name, 
+                    message: message, 
+                    imageUrl: imageUrl,
+                    audioUrl: audioUrl,
+                    timestamp: new Date() 
+                });
+
                 alert("Đã thêm thiệp thành công!");
+                
+                // Xóa trắng form sau khi thêm
                 document.getElementById('sender-name').value = '';
                 document.getElementById('sender-message').value = '';
-            } catch (e) { alert("Lỗi khi thêm: " + e.message); }
+                document.getElementById('sender-image').value = '';
+                document.getElementById('sender-audio').value = '';
+            } catch (e) { 
+                alert("Lỗi khi thêm: " + e.message); 
+            } finally {
+                btn.innerText = "Thêm thiệp";
+                btn.disabled = false;
+            }
         });
 
         function fireworks() {
