@@ -13,19 +13,19 @@
             margin: 0; padding: 0; width: 100%; height: 100%; 
             font-family: 'Playfair Display', serif; 
             color: #222; overflow-x: hidden; 
-            background-image: url('image_e03b25.png'); /* ẢNH NỀN BÃI BIỂN */
+            background-image: url('image_e03b25.png'); /* ẢNH NỀN BÃI BIỂN CỦA NHÓM */
             background-size: cover; background-position: center; background-attachment: fixed;
         }
         
         .hidden { display: none !important; }
 
-        /* MÀN HÌNH 1: LỜI CHÚC & PHÁO HOA */
+        /* MÀN HÌNH 1: LỜI CHÚC CÔNG GIÁO & PHÁO HOA */
         #intro-screen { 
             height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; 
             background: rgba(0, 0, 0, 0.4); text-align: center; transition: opacity 1s ease-in-out; padding: 20px;
         }
-        h1 { font-size: 3.5rem; color: #fff; margin-bottom: 20px; text-shadow: 2px 2px 10px rgba(0,0,0,0.8); }
-        .intro-text { font-size: 1.2rem; margin-bottom: 40px; font-style: italic; color: #fff; text-shadow: 1px 1px 5px rgba(0,0,0,0.8); }
+        h1 { font-size: 3.5rem; color: #fff; margin-bottom: 15px; text-shadow: 2px 2px 10px rgba(0,0,0,0.8); }
+        .intro-text { font-size: 1.3rem; margin-bottom: 40px; font-style: italic; color: #fff; text-shadow: 1px 1px 5px rgba(0,0,0,0.8); line-height: 1.5; max-width: 800px; }
         .btn { 
             padding: 12px 30px; font-size: 1.2rem; color: #fff; background-color: rgba(212, 175, 55, 0.95); 
             border: 2px solid rgba(255,255,255,0.8); border-radius: 8px; cursor: pointer; 
@@ -100,7 +100,7 @@
         }
         .modal-close-btn:hover { transform: scale(1.2); }
 
-        /* ẢNH BÊN TRONG MODAL (ĐƯỢC PHÓNG TO) */
+        /* ẢNH BÊN TRONG MODAL */
         .modal-image {
             width: 100%; max-height: 300px; object-fit: cover; border-radius: 12px;
             border: 3px solid #d4af37; box-shadow: 0 5px 15px rgba(0,0,0,0.2); margin-bottom: 20px;
@@ -108,7 +108,6 @@
         .modal-sender-name { font-size: 2rem; color: #b73229; margin: 0 0 15px 0; font-weight: bold; border-bottom: 2px dashed #ccc; padding-bottom: 10px; }
         .modal-message { font-size: 1.15rem; line-height: 1.7; color: #222; text-align: justify; margin-bottom: 20px; font-weight: 500;}
 
-        /* TÙY CHỈNH THANH CUỘN CHO MODAL */
         .modal-content::-webkit-scrollbar { width: 6px; }
         .modal-content::-webkit-scrollbar-thumb { background: #d4af37; border-radius: 3px; }
 
@@ -123,10 +122,11 @@
     </style>
 </head>
 <body>
-    <!-- MÀN HÌNH 1 -->
+    <!-- MÀN HÌNH 1: GIAO DIỆN CHÚC MỪNG -->
     <div id="intro-screen">
         <h1>Kính Chúc Mừng Sinh Nhật Thầy</h1>
-        <p class="intro-text">Tuổi mới thêm nhiều an lạc và Phật sự viên thành.</p>
+        <!-- Lời chúc mang ý nghĩa Công giáo -->
+        <p class="intro-text">"Nguyện xin Thiên Chúa ban muôn hồng ân, sức khỏe và bình an xuống trên Thầy trong tuổi mới."</p>
         <button class="btn" id="btn-open-gift">Mở Quà Từ Chúng Con</button>
     </div>
 
@@ -137,18 +137,18 @@
             <h3 style="color: #b73229; margin-top: 0; text-align: center; text-shadow: 1px 1px 0px #fff;">Khu vực Admin</h3>
             <div class="input-group">
                 <label>Tên người gửi (*)</label>
-                <input type="text" id="sender-name" placeholder="VD: Hiếu Tam">
+                <input type="text" id="sender-name" placeholder="VD: Nhóm Thiếu Nhi">
             </div>
             <div class="input-group">
                 <label>Nội dung lời chúc (*)</label>
                 <textarea id="sender-message" rows="3" placeholder="Nhập lời chúc..."></textarea>
             </div>
             <div class="input-group">
-                <label>Link Ảnh đại diện (Khuyên dùng: postimages.org)</label>
+                <label>Link Ảnh (Khuyên dùng: postimages.org)</label>
                 <input type="text" id="sender-image" placeholder="Dán link ảnh vào đây">
             </div>
             <div class="input-group">
-                <label>Link Ghi âm/Nhạc (Khuyên dùng: catbox.moe)</label>
+                <label>Link Nhạc (Khuyên dùng: catbox.moe)</label>
                 <input type="text" id="sender-audio" placeholder="Dán link file nhạc/ghi âm vào đây">
             </div>
             <div style="text-align: center; margin-top: 20px;">
@@ -162,7 +162,6 @@
             <p style="margin-top: 10px; font-size: 1.1rem; color: #333; font-weight: bold;">(Thầy hãy nhấp vào từng thiệp để mở ra nhé)</p>
         </div>
         
-        <!-- LƯỚI CHỨA CÁC BÌA THIỆP (BỊ ẨN TÊN) -->
         <div id="messages-grid"></div>
     </div>
 
@@ -170,9 +169,7 @@
     <div id="card-modal">
         <div class="modal-content">
             <button class="modal-close-btn" id="modal-close-btn">&times;</button>
-            <div id="modal-body">
-                <!-- Nội dung thiệp sẽ được Javascript bơm vào đây -->
-            </div>
+            <div id="modal-body"></div>
         </div>
     </div>
 
@@ -183,6 +180,7 @@
         import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
         import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 
+        // CẤU HÌNH FIREBASE
         const firebaseConfig = {
             apiKey: "AIzaSyAAIEUHQkiBNB5ma1nLUS3y9dzOyDmhRAM",
             authDomain: "quatangthay.firebaseapp.com",
@@ -212,12 +210,11 @@
             window.scrollTo(0, 0);
         });
 
-        // HÀM TẢI DỮ LIỆU TỪ FIREBASE
+        // TẢI DỮ LIỆU TỪ FIREBASE
         const q = query(collection(db, "messages"), orderBy("timestamp", "desc"));
         onSnapshot(q, (snapshot) => {
             grid.innerHTML = ""; 
             
-            // Tính tổng số thiệp để đánh số thứ tự từ cũ đến mới (Thiệp số 1, 2, 3...)
             let totalCards = snapshot.size; 
             let currentIndex = 0;
 
@@ -225,14 +222,12 @@
                 const data = documentSnapshot.data();
                 const docId = documentSnapshot.id;
                 
-                // Số thứ tự của thiệp (Thiệp mới nhất sẽ có số lớn nhất)
                 let cardNumber = totalCards - currentIndex; 
                 currentIndex++;
 
                 const card = document.createElement('div');
                 card.className = 'message-card glass-effect';
 
-                // NÚT XÓA (ADMIN)
                 const deleteBtn = document.createElement('button');
                 deleteBtn.className = 'btn-delete';
                 deleteBtn.innerHTML = '❌';
@@ -245,7 +240,7 @@
                 });
                 card.appendChild(deleteBtn);
 
-                // GIAO DIỆN MẶT TRƯỚC (BÌA THIỆP BÍ MẬT)
+                // GIAO DIỆN BÌA THIỆP
                 const cardFront = document.createElement('div');
                 cardFront.innerHTML = `
                     <span style="font-size: 4rem;">💌</span>
@@ -254,7 +249,6 @@
                 `;
                 card.appendChild(cardFront);
 
-                // SỰ KIỆN KHI BẤM VÀO BÌA THIỆP -> MỞ POPUP MODAL
                 card.addEventListener('click', () => {
                     openModal(data);
                 });
@@ -265,12 +259,10 @@
 
         // HÀM MỞ POPUP HIỂN THỊ NỘI DUNG THIỆP
         function openModal(data) {
-            // Xử lý Ảnh (Phóng to lên)
             let imageHtml = (data.imageUrl && data.imageUrl.trim() !== "") 
                 ? `<img src="${data.imageUrl}" class="modal-image" alt="Ảnh đính kèm">` 
                 : ``;
             
-            // Xử lý Nhạc
             let audioHtml = (data.audioUrl && data.audioUrl.trim() !== "") 
                 ? `<div style="margin-top: 20px; width: 100%; border-top: 1px dashed #ccc; padding-top: 15px;">
                        <audio controls style="width: 100%; height: 45px;" class="modal-audio">
@@ -279,7 +271,6 @@
                    </div>` 
                 : ``;
 
-            // Bơm dữ liệu vào Modal
             modalBody.innerHTML = `
                 ${imageHtml}
                 <div style="text-align: center;">
@@ -292,28 +283,21 @@
                 ${audioHtml}
             `;
             
-            // Hiển thị Modal
             cardModal.classList.add('show');
         }
 
-        // HÀM ĐÓNG MODAL VÀ TẮT NHẠC
+        // ĐÓNG MODAL
         document.getElementById('modal-close-btn').addEventListener('click', closeModal);
-        
-        // Đóng modal khi bấm ra ngoài khoảng đen
         cardModal.addEventListener('click', (e) => {
             if (e.target === cardModal) { closeModal(); }
         });
 
         function closeModal() {
             cardModal.classList.remove('show');
-            // Tự động dừng phát nhạc nếu đang phát
             const audio = document.querySelector('.modal-audio');
             if(audio) { audio.pause(); }
         }
 
-        // ==========================================
-        // CÁC HÀM XỬ LÝ ADMIN & FIREBASE NHƯ CŨ
-        // ==========================================
         function processLink(url) {
             if (!url) return "";
             url = url.trim();
@@ -323,6 +307,7 @@
             return url;
         }
 
+        // ĐĂNG NHẬP ADMIN
         document.getElementById('admin-toggle').addEventListener('click', () => {
             if (!auth.currentUser) {
                 const email = prompt("Email Admin:");
@@ -347,6 +332,7 @@
             signOut(auth).then(() => alert("Đã đăng xuất."));
         });
 
+        // THÊM THIỆP MỚI
         document.getElementById('btn-add-message').addEventListener('click', async () => {
             const name = document.getElementById('sender-name').value;
             const message = document.getElementById('sender-message').value;
@@ -376,6 +362,7 @@
             }
         });
 
+        // PHÁO HOA
         function fireworks() {
             var duration = 5 * 1000; var animationEnd = Date.now() + duration;
             var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
