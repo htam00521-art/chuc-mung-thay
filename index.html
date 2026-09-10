@@ -53,7 +53,7 @@
         #messages-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; width: 100%; max-width: 1000px; margin-top: 20px; opacity: 0; transform: translateY(20px); transition: all 1s ease-in-out; }
         .show-messages { opacity: 1 !important; transform: translateY(0) !important; }
 
-        .message-card { background-color: transparent; width: 100%; height: 320px; perspective: 1000px; cursor: pointer; position: relative; }
+        .message-card { background-color: transparent; width: 100%; height: 350px; perspective: 1000px; cursor: pointer; position: relative; } /* Tăng chút chiều cao để chứa ảnh mặt sau */
         .card-inner { position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.8s; transform-style: preserve-3d; }
         .message-card.flipped .card-inner { transform: rotateY(180deg); }
 
@@ -66,17 +66,17 @@
             display: flex; flex-direction: column; align-items: center; justify-content: center;
             background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7)); border: 2px solid #d4af37;
         }
-        .sender-avatar { width: 90px; height: 90px; border-radius: 50%; object-fit: cover; border: 3px solid #d4af37; box-shadow: 0 4px 10px rgba(0,0,0,0.2); margin-bottom: 10px; background: #fff;}
         .card-front h3 { margin: 10px 0; font-size: 1.6rem; color: #b73229; text-shadow: 1px 1px 0px #fff; font-weight: bold; }
         .card-front p { margin: 0; font-size: 1rem; color: #333; font-style: italic; font-weight: bold; }
 
         .card-back {
-            transform: rotateY(180deg); text-align: justify; display: flex; flex-direction: column;
+            transform: rotateY(180deg); text-align: justify; display: flex; flex-direction: column; align-items: center;
             background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(255,255,255,0.85)); border-left: 8px solid #d4af37;
         }
-        .card-back h4 { color: #b73229; margin-top: 0; font-size: 1.3rem; border-bottom: 1px dashed rgba(0,0,0,0.3); padding-bottom: 10px; font-weight: bold; text-shadow: 1px 1px 0px #fff;}
-        .card-content { flex-grow: 1; overflow-y: auto; padding-right: 5px; }
-        .card-content p { line-height: 1.6; font-size: 1.1rem; color: #111; margin-top: 0; font-weight: 500;}
+        .sender-avatar { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 3px solid #d4af37; box-shadow: 0 4px 8px rgba(0,0,0,0.1); margin-bottom: 10px; flex-shrink: 0;}
+        .card-back h4 { color: #b73229; margin-top: 0; font-size: 1.3rem; border-bottom: 1px dashed rgba(0,0,0,0.3); padding-bottom: 5px; font-weight: bold; text-shadow: 1px 1px 0px #fff; width: 100%; text-align: center;}
+        .card-content { flex-grow: 1; overflow-y: auto; padding: 0 5px; width: 100%; text-align: left;}
+        .card-content p { line-height: 1.6; font-size: 1.05rem; color: #111; margin-top: 0; font-weight: 500;}
         .card-content::-webkit-scrollbar { width: 6px; }
         .card-content::-webkit-scrollbar-thumb { background: #d4af37; border-radius: 3px; }
 
@@ -105,7 +105,7 @@
     </div>
 
     <div id="card-screen" class="hidden">
-        <!-- FORM ADMIN TRỞ LẠI DÙNG INPUT DÁN LINK -->
+        <!-- FORM ADMIN -->
         <div id="admin-panel" class="hidden glass-effect">
             <h3 style="color: #b73229; margin-top: 0; text-align: center; text-shadow: 1px 1px 0px #fff;">Khu vực Admin - Thêm thiệp mới</h3>
             <div class="input-group">
@@ -169,18 +169,6 @@
             window.scrollTo(0, 0);
         });
 
-        // Hàm xử lý link Google Drive nếu lỡ dán vào (chuyển sang dạng tải trực tiếp)
-        function processLink(url) {
-            if (!url) return "";
-            url = url.trim();
-            const driveRegex = /\/file\/d\/([a-zA-Z0-9_-]+)/;
-            const match = url.match(driveRegex);
-            if (match && match[1]) {
-                return `https://drive.google.com/uc?export=download&id=${match[1]}`;
-            }
-            return url;
-        }
-
         const q = query(collection(db, "messages"), orderBy("timestamp", "desc"));
         onSnapshot(q, (snapshot) => {
             grid.innerHTML = ""; 
@@ -204,12 +192,14 @@
                 card.appendChild(deleteBtn);
                 card.addEventListener('click', function() { this.classList.toggle('flipped'); });
 
-                let imageHtml = (data.imageUrl && data.imageUrl !== "") 
-                    ? `<img src="${data.imageUrl}" class="sender-avatar" alt="Avatar" onerror="this.outerHTML='<span style=\\'font-size: 3rem; margin-bottom: 10px;\\'>💌</span>'">` 
-                    : `<span style="font-size: 3rem; margin-bottom: 10px;">💌</span>`;
+                // Ảnh sẽ được đưa sang MẶT SAU (card-back)
+                let imageHtml = (data.imageUrl && data.imageUrl.trim() !== "") 
+                    ? `<img src="${data.imageUrl}" class="sender-avatar" alt="Avatar">` 
+                    : ``;
                 
-                let audioHtml = (data.audioUrl && data.audioUrl !== "") 
-                    ? `<div style="margin-top: 15px; padding-top: 10px; border-top: 1px dashed rgba(0,0,0,0.3);">
+                // Nhạc cũng ở MẶT SAU (card-back)
+                let audioHtml = (data.audioUrl && data.audioUrl.trim() !== "") 
+                    ? `<div style="margin-top: 15px; padding-top: 10px; border-top: 1px dashed rgba(0,0,0,0.3); width: 100%;">
                            <audio controls style="width: 100%; height: 40px;" class="audio-player">
                                <source src="${data.audioUrl}">
                            </audio>
@@ -219,13 +209,17 @@
                 const innerDiv = document.createElement('div');
                 innerDiv.className = 'card-inner';
                 innerDiv.innerHTML = `
+                    <!-- MẶT TRƯỚC (BÌA THIỆP): Chỉ hiện lá thư và tên -->
                     <div class="card-front glass-effect">
-                        ${imageHtml}
+                        <span style="font-size: 3.5rem; margin-bottom: 10px;">💌</span>
                         <p>Thiệp gửi từ:</p>
                         <h3>${data.name}</h3>
                         <p>(Nhấp để mở thiệp)</p>
                     </div>
+
+                    <!-- MẶT SAU (NỘI DUNG): Hiện Ảnh, Lời chúc, Nhạc -->
                     <div class="card-back glass-effect">
+                        ${imageHtml}
                         <h4>${data.name}</h4>
                         <div class="card-content">
                             <p>${data.message.replace(/\n/g, '<br>')}</p>
@@ -270,8 +264,8 @@
         document.getElementById('btn-add-message').addEventListener('click', async () => {
             const name = document.getElementById('sender-name').value;
             const message = document.getElementById('sender-message').value;
-            const imageUrl = processLink(document.getElementById('sender-image').value);
-            const audioUrl = processLink(document.getElementById('sender-audio').value);
+            const imageUrl = document.getElementById('sender-image').value;
+            const audioUrl = document.getElementById('sender-audio').value;
             
             if(!name || !message) { alert("Vui lòng điền tên và lời chúc!"); return; }
 
