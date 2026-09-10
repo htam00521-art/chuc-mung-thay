@@ -13,7 +13,7 @@
             margin: 0; padding: 0; width: 100%; height: 100%; 
             font-family: 'Playfair Display', serif; 
             color: #222; overflow-x: hidden; 
-            background-image: url('image_e03b25.png'); /* ẢNH NỀN BÃI BIỂN */
+            background-image: url('image_e03b25.png'); /* ẢNH NỀN BÃI BIỂN CỦA NHÓM */
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -21,12 +21,9 @@
         
         .hidden { display: none !important; }
 
-        /* MÀN HÌNH 1 */
         #intro-screen { 
             height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; 
-            background: rgba(0, 0, 0, 0.4); 
-            text-align: center; transition: opacity 1s ease-in-out; 
-            padding: 20px;
+            background: rgba(0, 0, 0, 0.4); text-align: center; transition: opacity 1s ease-in-out; padding: 20px;
         }
         h1 { font-size: 3.5rem; color: #fff; margin-bottom: 20px; text-shadow: 2px 2px 10px rgba(0,0,0,0.8); }
         .intro-text { font-size: 1.2rem; margin-bottom: 40px; font-style: italic; color: #fff; text-shadow: 1px 1px 5px rgba(0,0,0,0.8); }
@@ -37,17 +34,13 @@
             backdrop-filter: blur(5px);
         }
         .btn:hover:not(:disabled) { background-color: rgba(191, 161, 69, 1); transform: translateY(-2px); }
-        .btn:disabled { background-color: rgba(204, 204, 204, 0.9); cursor: wait; color: #333; }
+        .btn:disabled { background-color: rgba(204, 204, 204, 0.9); cursor: wait; color: #333;}
 
-        /* MÀN HÌNH 2 */
         #card-screen { min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 40px 20px; background: rgba(0,0,0,0.2); }
         
         .glass-effect {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 2px solid rgba(255, 255, 255, 0.9);
-            box-shadow: 0 10px 40px 0 rgba(0, 0, 0, 0.4);
+            background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            border: 2px solid rgba(255, 255, 255, 0.9); box-shadow: 0 10px 40px 0 rgba(0, 0, 0, 0.4);
         }
 
         #main-envelope { 
@@ -60,7 +53,6 @@
         #messages-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; width: 100%; max-width: 1000px; margin-top: 20px; opacity: 0; transform: translateY(20px); transition: all 1s ease-in-out; }
         .show-messages { opacity: 1 !important; transform: translateY(0) !important; }
 
-        /* THIỆP & LẬT 3D */
         .message-card { background-color: transparent; width: 100%; height: 320px; perspective: 1000px; cursor: pointer; position: relative; }
         .card-inner { position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.8s; transform-style: preserve-3d; }
         .message-card.flipped .card-inner { transform: rotateY(180deg); }
@@ -70,30 +62,24 @@
             border-radius: 15px; padding: 20px;
         }
 
-        /* MẶT TRƯỚC */
         .card-front {
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7)); 
-            border: 2px solid #d4af37;
+            background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7)); border: 2px solid #d4af37;
         }
         .sender-avatar { width: 90px; height: 90px; border-radius: 50%; object-fit: cover; border: 3px solid #d4af37; box-shadow: 0 4px 10px rgba(0,0,0,0.2); margin-bottom: 10px; background: #fff;}
         .card-front h3 { margin: 10px 0; font-size: 1.6rem; color: #b73229; text-shadow: 1px 1px 0px #fff; font-weight: bold; }
         .card-front p { margin: 0; font-size: 1rem; color: #333; font-style: italic; font-weight: bold; }
 
-        /* MẶT SAU */
         .card-back {
             transform: rotateY(180deg); text-align: justify; display: flex; flex-direction: column;
-            background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(255,255,255,0.85));
-            border-left: 8px solid #d4af37;
+            background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(255,255,255,0.85)); border-left: 8px solid #d4af37;
         }
         .card-back h4 { color: #b73229; margin-top: 0; font-size: 1.3rem; border-bottom: 1px dashed rgba(0,0,0,0.3); padding-bottom: 10px; font-weight: bold; text-shadow: 1px 1px 0px #fff;}
         .card-content { flex-grow: 1; overflow-y: auto; padding-right: 5px; }
         .card-content p { line-height: 1.6; font-size: 1.1rem; color: #111; margin-top: 0; font-weight: 500;}
-        
         .card-content::-webkit-scrollbar { width: 6px; }
         .card-content::-webkit-scrollbar-thumb { background: #d4af37; border-radius: 3px; }
 
-        /* NÚT XÓA ADMIN */
         .btn-delete {
             position: absolute; top: -10px; right: -10px; background: #e74c3c; color: white; border: 2px solid white; 
             border-radius: 50%; width: 32px; height: 32px; font-size: 14px; cursor: pointer; z-index: 10;
@@ -102,18 +88,16 @@
         .btn-delete:hover { background: #c0392b; transform: scale(1.15); }
         body.is-admin .btn-delete { display: block; } 
 
-        /* KHU VỰC ADMIN */
         #admin-toggle { position: fixed; bottom: 10px; right: 10px; opacity: 0.3; cursor: pointer; font-size: 0.8rem; z-index: 100; padding: 5px; background: rgba(255,255,255,0.8); border-radius: 5px; border: 1px solid #ccc;}
         #admin-toggle:hover { opacity: 1; }
         #admin-panel { width: 100%; max-width: 600px; padding: 25px; margin-bottom: 20px; border-radius: 12px; text-align: left; }
         .input-group { margin-bottom: 15px; display: flex; flex-direction: column; }
         .input-group label { margin-bottom: 5px; font-weight: bold; color: #b73229; font-size: 1rem; text-shadow: 1px 1px 0px #fff; }
-        .input-group input[type="text"], .input-group textarea, .input-group input[type="file"] { padding: 12px; border: 2px solid #ccc; border-radius: 6px; font-family: inherit; background: rgba(255,255,255,0.9); font-size: 1rem; color: #111; font-weight: 500;}
+        .input-group input[type="text"], .input-group textarea { padding: 12px; border: 2px solid #ccc; border-radius: 6px; font-family: inherit; background: rgba(255,255,255,0.9); font-size: 1rem; color: #111; font-weight: 500;}
         .input-group input:focus, .input-group textarea:focus { outline: none; border-color: #d4af37; background: #fff; }
     </style>
 </head>
 <body>
-
     <div id="intro-screen">
         <h1>Kính Chúc Mừng Sinh Nhật Thầy</h1>
         <p class="intro-text">Tuổi mới thêm nhiều an lạc và Phật sự viên thành.</p>
@@ -121,7 +105,7 @@
     </div>
 
     <div id="card-screen" class="hidden">
-        <!-- FORM ADMIN (NÚT CHỌN FILE) -->
+        <!-- FORM ADMIN TRỞ LẠI DÙNG INPUT DÁN LINK -->
         <div id="admin-panel" class="hidden glass-effect">
             <h3 style="color: #b73229; margin-top: 0; text-align: center; text-shadow: 1px 1px 0px #fff;">Khu vực Admin - Thêm thiệp mới</h3>
             <div class="input-group">
@@ -133,17 +117,15 @@
                 <textarea id="sender-message" rows="3" placeholder="Nhập lời chúc..."></textarea>
             </div>
             <div class="input-group">
-                <label>Ảnh đại diện (Chọn ảnh từ máy)</label>
-                <!-- Đổi thành nút chọn file -->
-                <input type="file" id="sender-image" accept="image/*">
+                <label>Link Ảnh đại diện (Khuyên dùng: postimages.org)</label>
+                <input type="text" id="sender-image" placeholder="Dán link ảnh (kết thúc bằng .jpg hoặc .png)">
             </div>
             <div class="input-group">
-                <label>File ghi âm lời chúc (Chọn file MP3/M4A)</label>
-                <!-- Đổi thành nút chọn file -->
-                <input type="file" id="sender-audio" accept="audio/*">
+                <label>Link Ghi âm/Nhạc (Khuyên dùng: catbox.moe hoặc vocaroo.com)</label>
+                <input type="text" id="sender-audio" placeholder="Dán link file nhạc/ghi âm vào đây">
             </div>
             <div style="text-align: center; margin-top: 20px;">
-                <button class="btn" id="btn-add-message" style="padding: 10px 25px;">Tải lên & Thêm thiệp</button>
+                <button class="btn" id="btn-add-message" style="padding: 10px 25px;">Thêm thiệp</button>
                 <button class="btn" id="btn-logout" style="padding: 10px 25px; background-color: #666; margin-left: 10px; border: none;">Đăng xuất</button>
             </div>
         </div>
@@ -152,34 +134,27 @@
             <h2>Danh sách thiệp chúc mừng</h2>
             <p style="margin-top: 10px; font-size: 1.1rem; color: #333; font-weight: bold;">(Thầy hãy nhấp vào từng thiệp để mở ra nhé)</p>
         </div>
-
         <div id="messages-grid"></div>
     </div>
-
     <div id="admin-toggle">🔑 Admin</div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
         import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
         import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
-        // Bổ sung thư viện Storage để tải file
-        import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-storage.js";
 
-        // CẤU HÌNH FIREBASE
         const firebaseConfig = {
             apiKey: "AIzaSyAAIEUHQkiBNB5ma1nLUS3y9dzOyDmhRAM",
             authDomain: "quatangthay.firebaseapp.com",
             projectId: "quatangthay",
             storageBucket: "quatangthay.firebasestorage.app",
             messagingSenderId: "891695748030",
-            appId: "1:891695748030:web:7d7f8b191526c2782c1fef",
-            measurementId: "G-JNY4S2TY1E"
+            appId: "1:891695748030:web:7d7f8b191526c2782c1fef"
         };
 
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
         const auth = getAuth(app);
-        const storage = getStorage(app); // Khởi tạo Storage
 
         const introScreen = document.getElementById('intro-screen');
         const cardScreen = document.getElementById('card-screen');
@@ -187,7 +162,6 @@
         const adminPanel = document.getElementById('admin-panel');
 
         window.onload = () => fireworks();
-
         document.getElementById('btn-open-gift').addEventListener('click', () => {
             introScreen.style.display = 'none';
             cardScreen.classList.remove('hidden');
@@ -195,7 +169,18 @@
             window.scrollTo(0, 0);
         });
 
-        // HIỂN THỊ DỮ LIỆU
+        // Hàm xử lý link Google Drive nếu lỡ dán vào (chuyển sang dạng tải trực tiếp)
+        function processLink(url) {
+            if (!url) return "";
+            url = url.trim();
+            const driveRegex = /\/file\/d\/([a-zA-Z0-9_-]+)/;
+            const match = url.match(driveRegex);
+            if (match && match[1]) {
+                return `https://drive.google.com/uc?export=download&id=${match[1]}`;
+            }
+            return url;
+        }
+
         const q = query(collection(db, "messages"), orderBy("timestamp", "desc"));
         onSnapshot(q, (snapshot) => {
             grid.innerHTML = ""; 
@@ -217,7 +202,6 @@
                     }
                 });
                 card.appendChild(deleteBtn);
-
                 card.addEventListener('click', function() { this.classList.toggle('flipped'); });
 
                 let imageHtml = (data.imageUrl && data.imageUrl !== "") 
@@ -241,7 +225,6 @@
                         <h3>${data.name}</h3>
                         <p>(Nhấp để mở thiệp)</p>
                     </div>
-                    
                     <div class="card-back glass-effect">
                         <h4>${data.name}</h4>
                         <div class="card-content">
@@ -260,7 +243,6 @@
             });
         });
 
-        // QUẢN LÝ ADMIN
         document.getElementById('admin-toggle').addEventListener('click', () => {
             if (!auth.currentUser) {
                 const email = prompt("Email Admin:");
@@ -275,13 +257,9 @@
 
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                adminPanel.classList.remove('hidden');
-                document.getElementById('admin-toggle').classList.add('hidden');
-                document.body.classList.add('is-admin'); 
+                adminPanel.classList.remove('hidden'); document.getElementById('admin-toggle').classList.add('hidden'); document.body.classList.add('is-admin'); 
             } else {
-                adminPanel.classList.add('hidden');
-                document.getElementById('admin-toggle').classList.remove('hidden');
-                document.body.classList.remove('is-admin'); 
+                adminPanel.classList.add('hidden'); document.getElementById('admin-toggle').classList.remove('hidden'); document.body.classList.remove('is-admin'); 
             }
         });
 
@@ -289,55 +267,31 @@
             signOut(auth).then(() => alert("Đã đăng xuất."));
         });
 
-        // XỬ LÝ UPLOAD FILE LÊN FIREBASE STORAGE
         document.getElementById('btn-add-message').addEventListener('click', async () => {
             const name = document.getElementById('sender-name').value;
             const message = document.getElementById('sender-message').value;
-            const imageFile = document.getElementById('sender-image').files[0];
-            const audioFile = document.getElementById('sender-audio').files[0];
+            const imageUrl = processLink(document.getElementById('sender-image').value);
+            const audioUrl = processLink(document.getElementById('sender-audio').value);
             
             if(!name || !message) { alert("Vui lòng điền tên và lời chúc!"); return; }
 
             const btn = document.getElementById('btn-add-message');
-            btn.innerText = "Đang tải dữ liệu lên mạng... Vui lòng chờ";
+            btn.innerText = "Đang xử lý...";
             btn.disabled = true;
 
             try {
-                let finalImageUrl = "";
-                let finalAudioUrl = "";
-
-                // Đẩy file ảnh
-                if (imageFile) {
-                    const imgRef = ref(storage, 'images/' + Date.now() + '_' + imageFile.name);
-                    await uploadBytes(imgRef, imageFile);
-                    finalImageUrl = await getDownloadURL(imgRef);
-                }
-
-                // Đẩy file ghi âm
-                if (audioFile) {
-                    const audRef = ref(storage, 'audio/' + Date.now() + '_' + audioFile.name);
-                    await uploadBytes(audRef, audioFile);
-                    finalAudioUrl = await getDownloadURL(audRef);
-                }
-
-                // Lưu vào Database
                 await addDoc(collection(db, "messages"), { 
-                    name: name, 
-                    message: message, 
-                    imageUrl: finalImageUrl,
-                    audioUrl: finalAudioUrl,
-                    timestamp: new Date() 
+                    name: name, message: message, imageUrl: imageUrl, audioUrl: audioUrl, timestamp: new Date() 
                 });
-
-                alert("Tải lên và thêm thiệp THÀNH CÔNG!");
+                alert("Đã thêm thiệp thành công!");
                 document.getElementById('sender-name').value = '';
                 document.getElementById('sender-message').value = '';
                 document.getElementById('sender-image').value = '';
                 document.getElementById('sender-audio').value = '';
             } catch (e) { 
-                alert("Lỗi khi tải file: " + e.message + "\n(Vui lòng kiểm tra lại quyền Storage trong Firebase)"); 
+                alert("Lỗi: " + e.message); 
             } finally {
-                btn.innerText = "Tải lên & Thêm thiệp";
+                btn.innerText = "Thêm thiệp";
                 btn.disabled = false;
             }
         });
