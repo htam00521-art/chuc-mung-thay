@@ -13,14 +13,13 @@
             margin: 0; padding: 0; width: 100%; height: 100%; 
             font-family: 'Playfair Display', serif; 
             color: #222; overflow-x: hidden; 
-            background-image: url('image_e03b25.png'); /* ẢNH NỀN BÃI BIỂN CỦA NHÓM */
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
+            background-image: url('image_e03b25.png'); /* ẢNH NỀN BÃI BIỂN */
+            background-size: cover; background-position: center; background-attachment: fixed;
         }
         
         .hidden { display: none !important; }
 
+        /* MÀN HÌNH 1: LỜI CHÚC & PHÁO HOA */
         #intro-screen { 
             height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; 
             background: rgba(0, 0, 0, 0.4); text-align: center; transition: opacity 1s ease-in-out; padding: 20px;
@@ -36,6 +35,7 @@
         .btn:hover:not(:disabled) { background-color: rgba(191, 161, 69, 1); transform: translateY(-2px); }
         .btn:disabled { background-color: rgba(204, 204, 204, 0.9); cursor: wait; color: #333;}
 
+        /* MÀN HÌNH 2: LƯỚI THIỆP */
         #card-screen { min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 40px 20px; background: rgba(0,0,0,0.2); }
         
         .glass-effect {
@@ -50,44 +50,69 @@
         #main-envelope:hover { transform: scale(1.02); }
         #main-envelope h2 { font-size: 2.2rem; margin: 0; font-weight: bold; text-shadow: 2px 2px 4px rgba(255,255,255,1); color: #b73229; }
         
-        #messages-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; width: 100%; max-width: 1000px; margin-top: 20px; opacity: 0; transform: translateY(20px); transition: all 1s ease-in-out; }
+        #messages-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; width: 100%; max-width: 1000px; margin-top: 20px; opacity: 0; transform: translateY(20px); transition: all 1s ease-in-out; }
         .show-messages { opacity: 1 !important; transform: translateY(0) !important; }
 
-        .message-card { background-color: transparent; width: 100%; height: 350px; perspective: 1000px; cursor: pointer; position: relative; } /* Tăng chút chiều cao để chứa ảnh mặt sau */
-        .card-inner { position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.8s; transform-style: preserve-3d; }
-        .message-card.flipped .card-inner { transform: rotateY(180deg); }
-
-        .card-front, .card-back {
-            position: absolute; width: 100%; height: 100%; -webkit-backface-visibility: hidden; backface-visibility: hidden;
-            border-radius: 15px; padding: 20px;
-        }
-
-        .card-front {
+        /* BÌA THIỆP BÊN NGOÀI (ẨN TÊN) */
+        .message-card {
+            background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7)); 
+            border: 2px solid #d4af37; border-radius: 15px; padding: 40px 20px;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7)); border: 2px solid #d4af37;
+            cursor: pointer; transition: transform 0.3s ease, box-shadow 0.3s ease; position: relative;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
         }
-        .card-front h3 { margin: 10px 0; font-size: 1.6rem; color: #b73229; text-shadow: 1px 1px 0px #fff; font-weight: bold; }
-        .card-front p { margin: 0; font-size: 1rem; color: #333; font-style: italic; font-weight: bold; }
+        .message-card:hover { transform: translateY(-5px); box-shadow: 0 12px 30px rgba(0,0,0,0.4); }
+        .message-card h3 { margin: 15px 0 5px 0; font-size: 1.8rem; color: #b73229; font-weight: bold; text-shadow: 1px 1px 0px #fff;}
+        .message-card p { margin: 0; font-size: 1.1rem; color: #555; font-style: italic; }
 
-        .card-back {
-            transform: rotateY(180deg); text-align: justify; display: flex; flex-direction: column; align-items: center;
-            background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(255,255,255,0.85)); border-left: 8px solid #d4af37;
-        }
-        .sender-avatar { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 3px solid #d4af37; box-shadow: 0 4px 8px rgba(0,0,0,0.1); margin-bottom: 10px; flex-shrink: 0;}
-        .card-back h4 { color: #b73229; margin-top: 0; font-size: 1.3rem; border-bottom: 1px dashed rgba(0,0,0,0.3); padding-bottom: 5px; font-weight: bold; text-shadow: 1px 1px 0px #fff; width: 100%; text-align: center;}
-        .card-content { flex-grow: 1; overflow-y: auto; padding: 0 5px; width: 100%; text-align: left;}
-        .card-content p { line-height: 1.6; font-size: 1.05rem; color: #111; margin-top: 0; font-weight: 500;}
-        .card-content::-webkit-scrollbar { width: 6px; }
-        .card-content::-webkit-scrollbar-thumb { background: #d4af37; border-radius: 3px; }
-
+        /* NÚT XÓA THIỆP CỦA ADMIN */
         .btn-delete {
             position: absolute; top: -10px; right: -10px; background: #e74c3c; color: white; border: 2px solid white; 
-            border-radius: 50%; width: 32px; height: 32px; font-size: 14px; cursor: pointer; z-index: 10;
+            border-radius: 50%; width: 35px; height: 35px; font-size: 16px; cursor: pointer; z-index: 10;
             box-shadow: 0 3px 8px rgba(0,0,0,0.5); display: none; font-weight: bold;
         }
         .btn-delete:hover { background: #c0392b; transform: scale(1.15); }
         body.is-admin .btn-delete { display: block; } 
 
+        /* POP-UP MODAL (KHI BẤM MỞ THIỆP) */
+        #card-modal {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.75); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+            display: flex; justify-content: center; align-items: center;
+            z-index: 1000; opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+            padding: 20px;
+        }
+        #card-modal.show { opacity: 1; pointer-events: auto; }
+        
+        .modal-content {
+            background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(255,245,230,0.95));
+            border: 3px solid #d4af37; border-radius: 15px; width: 100%; max-width: 550px;
+            max-height: 90vh; overflow-y: auto; position: relative; padding: 30px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.5); text-align: center;
+            transform: translateY(30px); transition: transform 0.3s ease;
+        }
+        #card-modal.show .modal-content { transform: translateY(0); }
+        
+        .modal-close-btn {
+            position: absolute; top: 15px; right: 15px; font-size: 28px; color: #b73229;
+            background: none; border: none; cursor: pointer; font-weight: bold; line-height: 1;
+            transition: transform 0.2s;
+        }
+        .modal-close-btn:hover { transform: scale(1.2); }
+
+        /* ẢNH BÊN TRONG MODAL (ĐƯỢC PHÓNG TO) */
+        .modal-image {
+            width: 100%; max-height: 300px; object-fit: cover; border-radius: 12px;
+            border: 3px solid #d4af37; box-shadow: 0 5px 15px rgba(0,0,0,0.2); margin-bottom: 20px;
+        }
+        .modal-sender-name { font-size: 2rem; color: #b73229; margin: 0 0 15px 0; font-weight: bold; border-bottom: 2px dashed #ccc; padding-bottom: 10px; }
+        .modal-message { font-size: 1.15rem; line-height: 1.7; color: #222; text-align: justify; margin-bottom: 20px; font-weight: 500;}
+
+        /* TÙY CHỈNH THANH CUỘN CHO MODAL */
+        .modal-content::-webkit-scrollbar { width: 6px; }
+        .modal-content::-webkit-scrollbar-thumb { background: #d4af37; border-radius: 3px; }
+
+        /* KHU VỰC ADMIN */
         #admin-toggle { position: fixed; bottom: 10px; right: 10px; opacity: 0.3; cursor: pointer; font-size: 0.8rem; z-index: 100; padding: 5px; background: rgba(255,255,255,0.8); border-radius: 5px; border: 1px solid #ccc;}
         #admin-toggle:hover { opacity: 1; }
         #admin-panel { width: 100%; max-width: 600px; padding: 25px; margin-bottom: 20px; border-radius: 12px; text-align: left; }
@@ -98,16 +123,18 @@
     </style>
 </head>
 <body>
+    <!-- MÀN HÌNH 1 -->
     <div id="intro-screen">
         <h1>Kính Chúc Mừng Sinh Nhật Thầy</h1>
         <p class="intro-text">Tuổi mới thêm nhiều an lạc và Phật sự viên thành.</p>
         <button class="btn" id="btn-open-gift">Mở Quà Từ Chúng Con</button>
     </div>
 
+    <!-- MÀN HÌNH 2 -->
     <div id="card-screen" class="hidden">
         <!-- FORM ADMIN -->
         <div id="admin-panel" class="hidden glass-effect">
-            <h3 style="color: #b73229; margin-top: 0; text-align: center; text-shadow: 1px 1px 0px #fff;">Khu vực Admin - Thêm thiệp mới</h3>
+            <h3 style="color: #b73229; margin-top: 0; text-align: center; text-shadow: 1px 1px 0px #fff;">Khu vực Admin</h3>
             <div class="input-group">
                 <label>Tên người gửi (*)</label>
                 <input type="text" id="sender-name" placeholder="VD: Hiếu Tam">
@@ -118,10 +145,10 @@
             </div>
             <div class="input-group">
                 <label>Link Ảnh đại diện (Khuyên dùng: postimages.org)</label>
-                <input type="text" id="sender-image" placeholder="Dán link ảnh (kết thúc bằng .jpg hoặc .png)">
+                <input type="text" id="sender-image" placeholder="Dán link ảnh vào đây">
             </div>
             <div class="input-group">
-                <label>Link Ghi âm/Nhạc (Khuyên dùng: catbox.moe hoặc vocaroo.com)</label>
+                <label>Link Ghi âm/Nhạc (Khuyên dùng: catbox.moe)</label>
                 <input type="text" id="sender-audio" placeholder="Dán link file nhạc/ghi âm vào đây">
             </div>
             <div style="text-align: center; margin-top: 20px;">
@@ -134,8 +161,21 @@
             <h2>Danh sách thiệp chúc mừng</h2>
             <p style="margin-top: 10px; font-size: 1.1rem; color: #333; font-weight: bold;">(Thầy hãy nhấp vào từng thiệp để mở ra nhé)</p>
         </div>
+        
+        <!-- LƯỚI CHỨA CÁC BÌA THIỆP (BỊ ẨN TÊN) -->
         <div id="messages-grid"></div>
     </div>
+
+    <!-- POP-UP NỔI LÊN KHI BẤM MỞ THIỆP -->
+    <div id="card-modal">
+        <div class="modal-content">
+            <button class="modal-close-btn" id="modal-close-btn">&times;</button>
+            <div id="modal-body">
+                <!-- Nội dung thiệp sẽ được Javascript bơm vào đây -->
+            </div>
+        </div>
+    </div>
+
     <div id="admin-toggle">🔑 Admin</div>
 
     <script type="module">
@@ -160,8 +200,11 @@
         const cardScreen = document.getElementById('card-screen');
         const grid = document.getElementById('messages-grid');
         const adminPanel = document.getElementById('admin-panel');
+        const cardModal = document.getElementById('card-modal');
+        const modalBody = document.getElementById('modal-body');
 
         window.onload = () => fireworks();
+        
         document.getElementById('btn-open-gift').addEventListener('click', () => {
             introScreen.style.display = 'none';
             cardScreen.classList.remove('hidden');
@@ -169,73 +212,116 @@
             window.scrollTo(0, 0);
         });
 
+        // HÀM TẢI DỮ LIỆU TỪ FIREBASE
         const q = query(collection(db, "messages"), orderBy("timestamp", "desc"));
         onSnapshot(q, (snapshot) => {
             grid.innerHTML = ""; 
+            
+            // Tính tổng số thiệp để đánh số thứ tự từ cũ đến mới (Thiệp số 1, 2, 3...)
+            let totalCards = snapshot.size; 
+            let currentIndex = 0;
+
             snapshot.forEach((documentSnapshot) => {
                 const data = documentSnapshot.data();
                 const docId = documentSnapshot.id;
                 
-                const card = document.createElement('div');
-                card.className = 'message-card';
+                // Số thứ tự của thiệp (Thiệp mới nhất sẽ có số lớn nhất)
+                let cardNumber = totalCards - currentIndex; 
+                currentIndex++;
 
+                const card = document.createElement('div');
+                card.className = 'message-card glass-effect';
+
+                // NÚT XÓA (ADMIN)
                 const deleteBtn = document.createElement('button');
                 deleteBtn.className = 'btn-delete';
                 deleteBtn.innerHTML = '❌';
                 deleteBtn.addEventListener('click', async (e) => {
                     e.stopPropagation(); 
-                    if(confirm(`Bạn có chắc chắn muốn xóa thiệp của "${data.name}" không?`)) {
+                    if(confirm(`Xác nhận xóa thiệp số ${cardNumber} của "${data.name}"?`)) {
                         try { await deleteDoc(doc(db, "messages", docId)); } 
                         catch (error) { alert("Lỗi khi xóa: " + error.message); }
                     }
                 });
                 card.appendChild(deleteBtn);
-                card.addEventListener('click', function() { this.classList.toggle('flipped'); });
 
-                // Ảnh sẽ được đưa sang MẶT SAU (card-back)
-                let imageHtml = (data.imageUrl && data.imageUrl.trim() !== "") 
-                    ? `<img src="${data.imageUrl}" class="sender-avatar" alt="Avatar">` 
-                    : ``;
-                
-                // Nhạc cũng ở MẶT SAU (card-back)
-                let audioHtml = (data.audioUrl && data.audioUrl.trim() !== "") 
-                    ? `<div style="margin-top: 15px; padding-top: 10px; border-top: 1px dashed rgba(0,0,0,0.3); width: 100%;">
-                           <audio controls style="width: 100%; height: 40px;" class="audio-player">
-                               <source src="${data.audioUrl}">
-                           </audio>
-                       </div>` 
-                    : ``;
-
-                const innerDiv = document.createElement('div');
-                innerDiv.className = 'card-inner';
-                innerDiv.innerHTML = `
-                    <!-- MẶT TRƯỚC (BÌA THIỆP): Chỉ hiện lá thư và tên -->
-                    <div class="card-front glass-effect">
-                        <span style="font-size: 3.5rem; margin-bottom: 10px;">💌</span>
-                        <p>Thiệp gửi từ:</p>
-                        <h3>${data.name}</h3>
-                        <p>(Nhấp để mở thiệp)</p>
-                    </div>
-
-                    <!-- MẶT SAU (NỘI DUNG): Hiện Ảnh, Lời chúc, Nhạc -->
-                    <div class="card-back glass-effect">
-                        ${imageHtml}
-                        <h4>${data.name}</h4>
-                        <div class="card-content">
-                            <p>${data.message.replace(/\n/g, '<br>')}</p>
-                        </div>
-                        ${audioHtml}
-                    </div>
+                // GIAO DIỆN MẶT TRƯỚC (BÌA THIỆP BÍ MẬT)
+                const cardFront = document.createElement('div');
+                cardFront.innerHTML = `
+                    <span style="font-size: 4rem;">💌</span>
+                    <h3>Thiệp số ${cardNumber}</h3>
+                    <p>(Nhấp để xem)</p>
                 `;
-                card.appendChild(innerDiv);
-                grid.appendChild(card);
+                card.appendChild(cardFront);
 
-                const audioPlayer = card.querySelector('.audio-player');
-                if (audioPlayer) {
-                    audioPlayer.addEventListener('click', (e) => { e.stopPropagation(); });
-                }
+                // SỰ KIỆN KHI BẤM VÀO BÌA THIỆP -> MỞ POPUP MODAL
+                card.addEventListener('click', () => {
+                    openModal(data);
+                });
+
+                grid.appendChild(card);
             });
         });
+
+        // HÀM MỞ POPUP HIỂN THỊ NỘI DUNG THIỆP
+        function openModal(data) {
+            // Xử lý Ảnh (Phóng to lên)
+            let imageHtml = (data.imageUrl && data.imageUrl.trim() !== "") 
+                ? `<img src="${data.imageUrl}" class="modal-image" alt="Ảnh đính kèm">` 
+                : ``;
+            
+            // Xử lý Nhạc
+            let audioHtml = (data.audioUrl && data.audioUrl.trim() !== "") 
+                ? `<div style="margin-top: 20px; width: 100%; border-top: 1px dashed #ccc; padding-top: 15px;">
+                       <audio controls style="width: 100%; height: 45px;" class="modal-audio">
+                           <source src="${data.audioUrl}">
+                       </audio>
+                   </div>` 
+                : ``;
+
+            // Bơm dữ liệu vào Modal
+            modalBody.innerHTML = `
+                ${imageHtml}
+                <div style="text-align: center;">
+                    <p style="margin: 0; color: #666; font-style: italic;">Lời chúc từ:</p>
+                    <h2 class="modal-sender-name">${data.name}</h2>
+                </div>
+                <div class="modal-message">
+                    ${data.message.replace(/\n/g, '<br>')}
+                </div>
+                ${audioHtml}
+            `;
+            
+            // Hiển thị Modal
+            cardModal.classList.add('show');
+        }
+
+        // HÀM ĐÓNG MODAL VÀ TẮT NHẠC
+        document.getElementById('modal-close-btn').addEventListener('click', closeModal);
+        
+        // Đóng modal khi bấm ra ngoài khoảng đen
+        cardModal.addEventListener('click', (e) => {
+            if (e.target === cardModal) { closeModal(); }
+        });
+
+        function closeModal() {
+            cardModal.classList.remove('show');
+            // Tự động dừng phát nhạc nếu đang phát
+            const audio = document.querySelector('.modal-audio');
+            if(audio) { audio.pause(); }
+        }
+
+        // ==========================================
+        // CÁC HÀM XỬ LÝ ADMIN & FIREBASE NHƯ CŨ
+        // ==========================================
+        function processLink(url) {
+            if (!url) return "";
+            url = url.trim();
+            const driveRegex = /\/file\/d\/([a-zA-Z0-9_-]+)/;
+            const match = url.match(driveRegex);
+            if (match && match[1]) { return `https://drive.google.com/uc?export=download&id=${match[1]}`; }
+            return url;
+        }
 
         document.getElementById('admin-toggle').addEventListener('click', () => {
             if (!auth.currentUser) {
@@ -264,8 +350,8 @@
         document.getElementById('btn-add-message').addEventListener('click', async () => {
             const name = document.getElementById('sender-name').value;
             const message = document.getElementById('sender-message').value;
-            const imageUrl = document.getElementById('sender-image').value;
-            const audioUrl = document.getElementById('sender-audio').value;
+            const imageUrl = processLink(document.getElementById('sender-image').value);
+            const audioUrl = processLink(document.getElementById('sender-audio').value);
             
             if(!name || !message) { alert("Vui lòng điền tên và lời chúc!"); return; }
 
