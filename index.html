@@ -13,29 +13,26 @@
             margin: 0; padding: 0; width: 100%; height: 100%; 
             font-family: 'Playfair Display', serif; 
             color: #333; overflow-x: hidden; 
-            background-image: url('image_e03b25.png'); /* ẢNH NỀN BÃI BIỂN CỦA NHÓM */
+            background-image: url('image_e03b25.png'); 
             background-size: cover; background-position: center; background-attachment: fixed;
         }
         
         .hidden { display: none !important; }
 
-        /* BẢNG MÀU MỚI: HÀI HÒA & SANG TRỌNG */
         :root {
-            --primary-navy: #1b365d; /* Xanh Navy trầm */
-            --accent-gold: #c19b6c;  /* Vàng cát / Vàng đồng dịu */
-            --glass-bg: rgba(255, 252, 248, 0.85); /* Trắng ngà trong suốt */
+            --primary-navy: #1b365d; 
+            --accent-gold: #c19b6c;  
+            --glass-bg: rgba(255, 252, 248, 0.85); 
         }
 
-        /* MÀN HÌNH 1: LỜI CHÚC CÔNG GIÁO & PHÁO HOA */
         #intro-screen { 
             height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; 
-            background: rgba(15, 23, 42, 0.4); /* Lớp phủ hơi ngả xanh đen cho hợp bầu trời */
+            background: rgba(15, 23, 42, 0.4); 
             text-align: center; transition: opacity 1s ease-in-out; padding: 20px;
         }
         h1 { font-size: 3.5rem; color: #fff; margin-bottom: 15px; text-shadow: 2px 2px 10px rgba(0,0,0,0.6); }
         .intro-text { font-size: 1.3rem; margin-bottom: 40px; font-style: italic; color: #f8f9fa; text-shadow: 1px 1px 5px rgba(0,0,0,0.6); line-height: 1.5; max-width: 800px; }
         
-        /* NÚT BẤM (MÀU XANH NAVY) */
         .btn { 
             padding: 12px 30px; font-size: 1.2rem; color: #fff; background-color: rgba(27, 54, 93, 0.95); 
             border: 2px solid rgba(255,255,255,0.6); border-radius: 8px; cursor: pointer; 
@@ -45,7 +42,6 @@
         .btn:hover:not(:disabled) { background-color: rgba(18, 38, 66, 1); border-color: var(--accent-gold); transform: translateY(-2px); }
         .btn:disabled { background-color: rgba(204, 204, 204, 0.9); cursor: wait; color: #555;}
 
-        /* MÀN HÌNH 2: LƯỚI THIỆP */
         #card-screen { min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 40px 20px; background: rgba(0,0,0,0.15); }
         
         .glass-effect {
@@ -62,7 +58,6 @@
         #messages-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; width: 100%; max-width: 1000px; margin-top: 20px; opacity: 0; transform: translateY(20px); transition: all 1s ease-in-out; }
         .show-messages { opacity: 1 !important; transform: translateY(0) !important; }
 
-        /* BÌA THIỆP BÊN NGOÀI (ẨN TÊN) */
         .message-card {
             background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(245,240,230,0.85)); 
             border: 1px solid var(--accent-gold); border-radius: 15px; padding: 40px 20px;
@@ -74,16 +69,25 @@
         .message-card h3 { margin: 15px 0 5px 0; font-size: 1.8rem; color: var(--primary-navy); font-weight: bold; text-shadow: 1px 1px 0px #fff;}
         .message-card p { margin: 0; font-size: 1.1rem; color: #666; font-style: italic; }
 
-        /* NÚT XÓA THIỆP CỦA ADMIN */
+        /* NÚT XÓA THIỆP */
         .btn-delete {
             position: absolute; top: -10px; right: -10px; background: #e74c3c; color: white; border: 2px solid white; 
             border-radius: 50%; width: 35px; height: 35px; font-size: 16px; cursor: pointer; z-index: 10;
             box-shadow: 0 3px 8px rgba(0,0,0,0.4); display: none; font-weight: bold;
         }
         .btn-delete:hover { background: #c0392b; transform: scale(1.15); }
-        body.is-admin .btn-delete { display: block; } 
+        
+        /* NÚT SỬA THIỆP */
+        .btn-edit {
+            position: absolute; top: -10px; right: 35px; background: #3498db; color: white; border: 2px solid white; 
+            border-radius: 50%; width: 35px; height: 35px; font-size: 16px; cursor: pointer; z-index: 10;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.4); display: none; font-weight: bold;
+        }
+        .btn-edit:hover { background: #2980b9; transform: scale(1.15); }
 
-        /* POP-UP MODAL (KHI BẤM MỞ THIỆP) */
+        body.is-admin .btn-delete, body.is-admin .btn-edit { display: block; } 
+
+        /* POP-UP MODAL */
         #card-modal {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
@@ -94,7 +98,7 @@
         #card-modal.show { opacity: 1; pointer-events: auto; }
         
         .modal-content {
-            background: #fffdf9; /* Trắng ngà rất nhẹ */
+            background: #fffdf9; 
             border: 2px solid var(--accent-gold); border-radius: 12px; width: 100%; max-width: 550px;
             max-height: 90vh; overflow-y: auto; position: relative; padding: 35px 30px;
             box-shadow: 0 15px 40px rgba(0,0,0,0.5); text-align: center;
@@ -109,7 +113,6 @@
         }
         .modal-close-btn:hover { transform: scale(1.2); opacity: 1; }
 
-        /* ẢNH & NỘI DUNG BÊN TRONG MODAL */
         .modal-image {
             width: 100%; max-height: 320px; object-fit: cover; border-radius: 8px;
             border: 1px solid rgba(0,0,0,0.1); box-shadow: 0 5px 15px rgba(0,0,0,0.1); margin-bottom: 20px;
@@ -128,19 +131,19 @@
         .input-group label { margin-bottom: 5px; font-weight: bold; color: var(--primary-navy); font-size: 1rem; text-shadow: 1px 1px 0px #fff; }
         .input-group input[type="text"], .input-group textarea { padding: 12px; border: 1px solid #ccc; border-radius: 6px; font-family: inherit; background: rgba(255,255,255,0.95); font-size: 1rem; color: #111;}
         .input-group input:focus, .input-group textarea:focus { outline: none; border-color: var(--primary-navy); background: #fff; }
+        
+        .btn-cancel { background-color: #f39c12; border-color: transparent; }
+        .btn-cancel:hover { background-color: #e67e22; }
     </style>
 </head>
 <body>
-    <!-- MÀN HÌNH 1 -->
     <div id="intro-screen">
         <h1>Kính Chúc Mừng Sinh Nhật Thầy</h1>
         <p class="intro-text">"Nguyện xin Thiên Chúa ban muôn hồng ân, sức khỏe và bình an xuống trên Thầy trong tuổi mới."</p>
         <button class="btn" id="btn-open-gift">Mở Quà Từ Chúng Con</button>
     </div>
 
-    <!-- MÀN HÌNH 2 -->
     <div id="card-screen" class="hidden">
-        <!-- FORM ADMIN -->
         <div id="admin-panel" class="hidden glass-effect">
             <h3 style="color: var(--primary-navy); margin-top: 0; text-align: center; text-shadow: 1px 1px 0px #fff;">Khu vực Admin</h3>
             <div class="input-group">
@@ -160,7 +163,9 @@
                 <input type="text" id="sender-audio" placeholder="Dán link file nhạc/ghi âm vào đây">
             </div>
             <div style="text-align: center; margin-top: 20px;">
+                <!-- CÁC NÚT THAO TÁC -->
                 <button class="btn" id="btn-add-message" style="padding: 10px 25px;">Thêm thiệp</button>
+                <button class="btn btn-cancel hidden" id="btn-cancel-edit" style="padding: 10px 25px; margin-left: 10px;">Hủy sửa</button>
                 <button class="btn" id="btn-logout" style="padding: 10px 25px; background-color: #666; margin-left: 10px; border: none;">Đăng xuất</button>
             </div>
         </div>
@@ -173,7 +178,7 @@
         <div id="messages-grid"></div>
     </div>
 
-    <!-- POP-UP NỔI LÊN KHI BẤM MỞ THIỆP -->
+    <!-- POP-UP -->
     <div id="card-modal">
         <div class="modal-content">
             <button class="modal-close-btn" id="modal-close-btn">&times;</button>
@@ -185,7 +190,8 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+        // Khai báo thêm updateDoc để cập nhật dữ liệu
+        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, deleteDoc, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
         import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 
         const firebaseConfig = {
@@ -200,6 +206,9 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
         const auth = getAuth(app);
+
+        // Biến lưu trữ ID của thiệp đang được chỉnh sửa
+        let currentEditId = null; 
 
         const introScreen = document.getElementById('intro-screen');
         const cardScreen = document.getElementById('card-screen');
@@ -217,7 +226,6 @@
             window.scrollTo(0, 0);
         });
 
-        // TẢI DỮ LIỆU TỪ FIREBASE
         const q = query(collection(db, "messages"), orderBy("timestamp", "desc"));
         onSnapshot(q, (snapshot) => {
             grid.innerHTML = ""; 
@@ -235,9 +243,11 @@
                 const card = document.createElement('div');
                 card.className = 'message-card';
 
+                // 1. NÚT XÓA THIỆP
                 const deleteBtn = document.createElement('button');
                 deleteBtn.className = 'btn-delete';
                 deleteBtn.innerHTML = '❌';
+                deleteBtn.title = 'Xóa thiệp';
                 deleteBtn.addEventListener('click', async (e) => {
                     e.stopPropagation(); 
                     if(confirm(`Xác nhận xóa thiệp số ${cardNumber} của "${data.name}"?`)) {
@@ -247,7 +257,30 @@
                 });
                 card.appendChild(deleteBtn);
 
-                // GIAO DIỆN BÌA THIỆP
+                // 2. NÚT SỬA THIỆP
+                const editBtn = document.createElement('button');
+                editBtn.className = 'btn-edit';
+                editBtn.innerHTML = '✏️';
+                editBtn.title = 'Chỉnh sửa thiệp';
+                editBtn.addEventListener('click', (e) => {
+                    e.stopPropagation(); // Không cho mở popup
+                    
+                    // Điền dữ liệu cũ vào Form
+                    document.getElementById('sender-name').value = data.name || '';
+                    document.getElementById('sender-message').value = data.message || '';
+                    document.getElementById('sender-image').value = data.imageUrl || '';
+                    document.getElementById('sender-audio').value = data.audioUrl || '';
+                    
+                    // Đổi trạng thái sang Chỉnh Sửa
+                    currentEditId = docId;
+                    document.getElementById('btn-add-message').innerText = "Lưu thay đổi";
+                    document.getElementById('btn-cancel-edit').classList.remove('hidden');
+                    
+                    // Cuộn trang lên chỗ Form
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+                card.appendChild(editBtn);
+
                 const cardFront = document.createElement('div');
                 cardFront.innerHTML = `
                     <span style="font-size: 3.5rem;">💌</span>
@@ -264,7 +297,6 @@
             });
         });
 
-        // HÀM MỞ POPUP HIỂN THỊ NỘI DUNG THIỆP
         function openModal(data) {
             let imageHtml = (data.imageUrl && data.imageUrl.trim() !== "") 
                 ? `<img src="${data.imageUrl}" class="modal-image" alt="Ảnh đính kèm">` 
@@ -289,11 +321,9 @@
                 </div>
                 ${audioHtml}
             `;
-            
             cardModal.classList.add('show');
         }
 
-        // ĐÓNG MODAL
         document.getElementById('modal-close-btn').addEventListener('click', closeModal);
         cardModal.addEventListener('click', (e) => {
             if (e.target === cardModal) { closeModal(); }
@@ -314,7 +344,20 @@
             return url;
         }
 
-        // ĐĂNG NHẬP ADMIN
+        // HÀM RESET FORM VỀ MẶC ĐỊNH
+        function resetForm() {
+            document.getElementById('sender-name').value = '';
+            document.getElementById('sender-message').value = '';
+            document.getElementById('sender-image').value = '';
+            document.getElementById('sender-audio').value = '';
+            
+            currentEditId = null;
+            document.getElementById('btn-add-message').innerText = "Thêm thiệp";
+            document.getElementById('btn-cancel-edit').classList.add('hidden');
+        }
+
+        document.getElementById('btn-cancel-edit').addEventListener('click', resetForm);
+
         document.getElementById('admin-toggle').addEventListener('click', () => {
             if (!auth.currentUser) {
                 const email = prompt("Email Admin:");
@@ -332,6 +375,7 @@
                 adminPanel.classList.remove('hidden'); document.getElementById('admin-toggle').classList.add('hidden'); document.body.classList.add('is-admin'); 
             } else {
                 adminPanel.classList.add('hidden'); document.getElementById('admin-toggle').classList.remove('hidden'); document.body.classList.remove('is-admin'); 
+                resetForm(); // Xóa sạch form nếu lỡ đang sửa mà đăng xuất
             }
         });
 
@@ -339,7 +383,7 @@
             signOut(auth).then(() => alert("Đã đăng xuất."));
         });
 
-        // THÊM THIỆP MỚI
+        // XỬ LÝ NÚT THÊM/CẬP NHẬT THIỆP
         document.getElementById('btn-add-message').addEventListener('click', async () => {
             const name = document.getElementById('sender-name').value;
             const message = document.getElementById('sender-message').value;
@@ -353,23 +397,27 @@
             btn.disabled = true;
 
             try {
-                await addDoc(collection(db, "messages"), { 
-                    name: name, message: message, imageUrl: imageUrl, audioUrl: audioUrl, timestamp: new Date() 
-                });
-                alert("Đã thêm thiệp thành công!");
-                document.getElementById('sender-name').value = '';
-                document.getElementById('sender-message').value = '';
-                document.getElementById('sender-image').value = '';
-                document.getElementById('sender-audio').value = '';
+                if (currentEditId) {
+                    // NẾU ĐANG Ở CHẾ ĐỘ SỬA -> UPDATE DOC
+                    await updateDoc(doc(db, "messages", currentEditId), { 
+                        name: name, message: message, imageUrl: imageUrl, audioUrl: audioUrl 
+                    });
+                    alert("Đã CẬP NHẬT thiệp thành công!");
+                } else {
+                    // NẾU ĐANG Ở CHẾ ĐỘ THÊM MỚI -> ADD DOC
+                    await addDoc(collection(db, "messages"), { 
+                        name: name, message: message, imageUrl: imageUrl, audioUrl: audioUrl, timestamp: new Date() 
+                    });
+                    alert("Đã THÊM thiệp thành công!");
+                }
+                resetForm();
             } catch (e) { 
                 alert("Lỗi: " + e.message); 
             } finally {
-                btn.innerText = "Thêm thiệp";
                 btn.disabled = false;
             }
         });
 
-        // PHÁO HOA - Đổi màu pháo hoa tiệp với bảng màu mới
         function fireworks() {
             var duration = 5 * 1000; var animationEnd = Date.now() + duration;
             var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
