@@ -12,64 +12,73 @@
         body, html { 
             margin: 0; padding: 0; width: 100%; height: 100%; 
             font-family: 'Playfair Display', serif; 
-            color: #222; overflow-x: hidden; 
+            color: #333; overflow-x: hidden; 
             background-image: url('image_e03b25.png'); /* ẢNH NỀN BÃI BIỂN CỦA NHÓM */
             background-size: cover; background-position: center; background-attachment: fixed;
         }
         
         .hidden { display: none !important; }
 
+        /* BẢNG MÀU MỚI: HÀI HÒA & SANG TRỌNG */
+        :root {
+            --primary-navy: #1b365d; /* Xanh Navy trầm */
+            --accent-gold: #c19b6c;  /* Vàng cát / Vàng đồng dịu */
+            --glass-bg: rgba(255, 252, 248, 0.85); /* Trắng ngà trong suốt */
+        }
+
         /* MÀN HÌNH 1: LỜI CHÚC CÔNG GIÁO & PHÁO HOA */
         #intro-screen { 
             height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; 
-            background: rgba(0, 0, 0, 0.4); text-align: center; transition: opacity 1s ease-in-out; padding: 20px;
+            background: rgba(15, 23, 42, 0.4); /* Lớp phủ hơi ngả xanh đen cho hợp bầu trời */
+            text-align: center; transition: opacity 1s ease-in-out; padding: 20px;
         }
-        h1 { font-size: 3.5rem; color: #fff; margin-bottom: 15px; text-shadow: 2px 2px 10px rgba(0,0,0,0.8); }
-        .intro-text { font-size: 1.3rem; margin-bottom: 40px; font-style: italic; color: #fff; text-shadow: 1px 1px 5px rgba(0,0,0,0.8); line-height: 1.5; max-width: 800px; }
+        h1 { font-size: 3.5rem; color: #fff; margin-bottom: 15px; text-shadow: 2px 2px 10px rgba(0,0,0,0.6); }
+        .intro-text { font-size: 1.3rem; margin-bottom: 40px; font-style: italic; color: #f8f9fa; text-shadow: 1px 1px 5px rgba(0,0,0,0.6); line-height: 1.5; max-width: 800px; }
+        
+        /* NÚT BẤM (MÀU XANH NAVY) */
         .btn { 
-            padding: 12px 30px; font-size: 1.2rem; color: #fff; background-color: rgba(212, 175, 55, 0.95); 
-            border: 2px solid rgba(255,255,255,0.8); border-radius: 8px; cursor: pointer; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5); transition: all 0.3s ease; font-family: inherit; font-weight: bold;
+            padding: 12px 30px; font-size: 1.2rem; color: #fff; background-color: rgba(27, 54, 93, 0.95); 
+            border: 2px solid rgba(255,255,255,0.6); border-radius: 8px; cursor: pointer; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4); transition: all 0.3s ease; font-family: inherit; font-weight: bold;
             backdrop-filter: blur(5px);
         }
-        .btn:hover:not(:disabled) { background-color: rgba(191, 161, 69, 1); transform: translateY(-2px); }
-        .btn:disabled { background-color: rgba(204, 204, 204, 0.9); cursor: wait; color: #333;}
+        .btn:hover:not(:disabled) { background-color: rgba(18, 38, 66, 1); border-color: var(--accent-gold); transform: translateY(-2px); }
+        .btn:disabled { background-color: rgba(204, 204, 204, 0.9); cursor: wait; color: #555;}
 
         /* MÀN HÌNH 2: LƯỚI THIỆP */
-        #card-screen { min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 40px 20px; background: rgba(0,0,0,0.2); }
+        #card-screen { min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 40px 20px; background: rgba(0,0,0,0.15); }
         
         .glass-effect {
-            background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-            border: 2px solid rgba(255, 255, 255, 0.9); box-shadow: 0 10px 40px 0 rgba(0, 0, 0, 0.4);
+            background: var(--glass-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.7); box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
         }
 
         #main-envelope { 
-            width: 90%; max-width: 600px; padding: 50px 20px; border-radius: 12px; text-align: center; 
-            cursor: pointer; transition: transform 0.5s ease; margin-bottom: 20px; color: #222;
+            width: 90%; max-width: 600px; padding: 45px 20px; border-radius: 12px; text-align: center; 
+            cursor: default; margin-bottom: 20px; color: #222;
         }
-        #main-envelope:hover { transform: scale(1.02); }
-        #main-envelope h2 { font-size: 2.2rem; margin: 0; font-weight: bold; text-shadow: 2px 2px 4px rgba(255,255,255,1); color: #b73229; }
+        #main-envelope h2 { font-size: 2.2rem; margin: 0; font-weight: bold; text-shadow: 1px 1px 3px rgba(255,255,255,1); color: var(--primary-navy); }
         
         #messages-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; width: 100%; max-width: 1000px; margin-top: 20px; opacity: 0; transform: translateY(20px); transition: all 1s ease-in-out; }
         .show-messages { opacity: 1 !important; transform: translateY(0) !important; }
 
         /* BÌA THIỆP BÊN NGOÀI (ẨN TÊN) */
         .message-card {
-            background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7)); 
-            border: 2px solid #d4af37; border-radius: 15px; padding: 40px 20px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(245,240,230,0.85)); 
+            border: 1px solid var(--accent-gold); border-radius: 15px; padding: 40px 20px;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
             cursor: pointer; transition: transform 0.3s ease, box-shadow 0.3s ease; position: relative;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
         }
-        .message-card:hover { transform: translateY(-5px); box-shadow: 0 12px 30px rgba(0,0,0,0.4); }
-        .message-card h3 { margin: 15px 0 5px 0; font-size: 1.8rem; color: #b73229; font-weight: bold; text-shadow: 1px 1px 0px #fff;}
-        .message-card p { margin: 0; font-size: 1.1rem; color: #555; font-style: italic; }
+        .message-card:hover { transform: translateY(-5px); box-shadow: 0 12px 30px rgba(0,0,0,0.3); border-width: 2px;}
+        .message-card h3 { margin: 15px 0 5px 0; font-size: 1.8rem; color: var(--primary-navy); font-weight: bold; text-shadow: 1px 1px 0px #fff;}
+        .message-card p { margin: 0; font-size: 1.1rem; color: #666; font-style: italic; }
 
         /* NÚT XÓA THIỆP CỦA ADMIN */
         .btn-delete {
             position: absolute; top: -10px; right: -10px; background: #e74c3c; color: white; border: 2px solid white; 
             border-radius: 50%; width: 35px; height: 35px; font-size: 16px; cursor: pointer; z-index: 10;
-            box-shadow: 0 3px 8px rgba(0,0,0,0.5); display: none; font-weight: bold;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.4); display: none; font-weight: bold;
         }
         .btn-delete:hover { background: #c0392b; transform: scale(1.15); }
         body.is-admin .btn-delete { display: block; } 
@@ -77,7 +86,7 @@
         /* POP-UP MODAL (KHI BẤM MỞ THIỆP) */
         #card-modal {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.75); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+            background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
             display: flex; justify-content: center; align-items: center;
             z-index: 1000; opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
             padding: 20px;
@@ -85,47 +94,46 @@
         #card-modal.show { opacity: 1; pointer-events: auto; }
         
         .modal-content {
-            background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(255,245,230,0.95));
-            border: 3px solid #d4af37; border-radius: 15px; width: 100%; max-width: 550px;
-            max-height: 90vh; overflow-y: auto; position: relative; padding: 30px;
+            background: #fffdf9; /* Trắng ngà rất nhẹ */
+            border: 2px solid var(--accent-gold); border-radius: 12px; width: 100%; max-width: 550px;
+            max-height: 90vh; overflow-y: auto; position: relative; padding: 35px 30px;
             box-shadow: 0 15px 40px rgba(0,0,0,0.5); text-align: center;
             transform: translateY(30px); transition: transform 0.3s ease;
         }
         #card-modal.show .modal-content { transform: translateY(0); }
         
         .modal-close-btn {
-            position: absolute; top: 15px; right: 15px; font-size: 28px; color: #b73229;
-            background: none; border: none; cursor: pointer; font-weight: bold; line-height: 1;
-            transition: transform 0.2s;
+            position: absolute; top: 10px; right: 15px; font-size: 32px; color: var(--primary-navy);
+            background: none; border: none; cursor: pointer; font-weight: normal; line-height: 1;
+            transition: transform 0.2s; opacity: 0.7;
         }
-        .modal-close-btn:hover { transform: scale(1.2); }
+        .modal-close-btn:hover { transform: scale(1.2); opacity: 1; }
 
-        /* ẢNH BÊN TRONG MODAL */
+        /* ẢNH & NỘI DUNG BÊN TRONG MODAL */
         .modal-image {
-            width: 100%; max-height: 300px; object-fit: cover; border-radius: 12px;
-            border: 3px solid #d4af37; box-shadow: 0 5px 15px rgba(0,0,0,0.2); margin-bottom: 20px;
+            width: 100%; max-height: 320px; object-fit: cover; border-radius: 8px;
+            border: 1px solid rgba(0,0,0,0.1); box-shadow: 0 5px 15px rgba(0,0,0,0.1); margin-bottom: 20px;
         }
-        .modal-sender-name { font-size: 2rem; color: #b73229; margin: 0 0 15px 0; font-weight: bold; border-bottom: 2px dashed #ccc; padding-bottom: 10px; }
-        .modal-message { font-size: 1.15rem; line-height: 1.7; color: #222; text-align: justify; margin-bottom: 20px; font-weight: 500;}
+        .modal-sender-name { font-size: 2rem; color: var(--primary-navy); margin: 0 0 15px 0; font-weight: bold; border-bottom: 1px solid var(--accent-gold); padding-bottom: 10px; }
+        .modal-message { font-size: 1.15rem; line-height: 1.7; color: #333; text-align: justify; margin-bottom: 20px; font-weight: 400;}
 
         .modal-content::-webkit-scrollbar { width: 6px; }
-        .modal-content::-webkit-scrollbar-thumb { background: #d4af37; border-radius: 3px; }
+        .modal-content::-webkit-scrollbar-thumb { background: var(--accent-gold); border-radius: 3px; }
 
         /* KHU VỰC ADMIN */
         #admin-toggle { position: fixed; bottom: 10px; right: 10px; opacity: 0.3; cursor: pointer; font-size: 0.8rem; z-index: 100; padding: 5px; background: rgba(255,255,255,0.8); border-radius: 5px; border: 1px solid #ccc;}
         #admin-toggle:hover { opacity: 1; }
         #admin-panel { width: 100%; max-width: 600px; padding: 25px; margin-bottom: 20px; border-radius: 12px; text-align: left; }
         .input-group { margin-bottom: 15px; display: flex; flex-direction: column; }
-        .input-group label { margin-bottom: 5px; font-weight: bold; color: #b73229; font-size: 1rem; text-shadow: 1px 1px 0px #fff; }
-        .input-group input[type="text"], .input-group textarea { padding: 12px; border: 2px solid #ccc; border-radius: 6px; font-family: inherit; background: rgba(255,255,255,0.9); font-size: 1rem; color: #111; font-weight: 500;}
-        .input-group input:focus, .input-group textarea:focus { outline: none; border-color: #d4af37; background: #fff; }
+        .input-group label { margin-bottom: 5px; font-weight: bold; color: var(--primary-navy); font-size: 1rem; text-shadow: 1px 1px 0px #fff; }
+        .input-group input[type="text"], .input-group textarea { padding: 12px; border: 1px solid #ccc; border-radius: 6px; font-family: inherit; background: rgba(255,255,255,0.95); font-size: 1rem; color: #111;}
+        .input-group input:focus, .input-group textarea:focus { outline: none; border-color: var(--primary-navy); background: #fff; }
     </style>
 </head>
 <body>
-    <!-- MÀN HÌNH 1: GIAO DIỆN CHÚC MỪNG -->
+    <!-- MÀN HÌNH 1 -->
     <div id="intro-screen">
         <h1>Kính Chúc Mừng Sinh Nhật Thầy</h1>
-        <!-- Lời chúc mang ý nghĩa Công giáo -->
         <p class="intro-text">"Nguyện xin Thiên Chúa ban muôn hồng ân, sức khỏe và bình an xuống trên Thầy trong tuổi mới."</p>
         <button class="btn" id="btn-open-gift">Mở Quà Từ Chúng Con</button>
     </div>
@@ -134,7 +142,7 @@
     <div id="card-screen" class="hidden">
         <!-- FORM ADMIN -->
         <div id="admin-panel" class="hidden glass-effect">
-            <h3 style="color: #b73229; margin-top: 0; text-align: center; text-shadow: 1px 1px 0px #fff;">Khu vực Admin</h3>
+            <h3 style="color: var(--primary-navy); margin-top: 0; text-align: center; text-shadow: 1px 1px 0px #fff;">Khu vực Admin</h3>
             <div class="input-group">
                 <label>Tên người gửi (*)</label>
                 <input type="text" id="sender-name" placeholder="VD: Nhóm Thiếu Nhi">
@@ -159,7 +167,7 @@
 
         <div id="main-envelope" class="glass-effect">
             <h2>Danh sách thiệp chúc mừng</h2>
-            <p style="margin-top: 10px; font-size: 1.1rem; color: #333; font-weight: bold;">(Thầy hãy nhấp vào từng thiệp để mở ra nhé)</p>
+            <p style="margin-top: 10px; font-size: 1.1rem; color: #444; font-style: italic;">(Kính mời Thầy nhấp vào từng thiệp để mở ra nhé)</p>
         </div>
         
         <div id="messages-grid"></div>
@@ -180,7 +188,6 @@
         import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
         import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 
-        // CẤU HÌNH FIREBASE
         const firebaseConfig = {
             apiKey: "AIzaSyAAIEUHQkiBNB5ma1nLUS3y9dzOyDmhRAM",
             authDomain: "quatangthay.firebaseapp.com",
@@ -226,7 +233,7 @@
                 currentIndex++;
 
                 const card = document.createElement('div');
-                card.className = 'message-card glass-effect';
+                card.className = 'message-card';
 
                 const deleteBtn = document.createElement('button');
                 deleteBtn.className = 'btn-delete';
@@ -243,9 +250,9 @@
                 // GIAO DIỆN BÌA THIỆP
                 const cardFront = document.createElement('div');
                 cardFront.innerHTML = `
-                    <span style="font-size: 4rem;">💌</span>
+                    <span style="font-size: 3.5rem;">💌</span>
                     <h3>Thiệp số ${cardNumber}</h3>
-                    <p>(Nhấp để xem)</p>
+                    <p>(Nhấp để mở)</p>
                 `;
                 card.appendChild(cardFront);
 
@@ -264,8 +271,8 @@
                 : ``;
             
             let audioHtml = (data.audioUrl && data.audioUrl.trim() !== "") 
-                ? `<div style="margin-top: 20px; width: 100%; border-top: 1px dashed #ccc; padding-top: 15px;">
-                       <audio controls style="width: 100%; height: 45px;" class="modal-audio">
+                ? `<div style="margin-top: 25px; width: 100%; padding-top: 15px;">
+                       <audio controls style="width: 100%; height: 45px; border-radius: 8px;" class="modal-audio">
                            <source src="${data.audioUrl}">
                        </audio>
                    </div>` 
@@ -274,7 +281,7 @@
             modalBody.innerHTML = `
                 ${imageHtml}
                 <div style="text-align: center;">
-                    <p style="margin: 0; color: #666; font-style: italic;">Lời chúc từ:</p>
+                    <p style="margin: 0; color: #888; font-style: italic; font-size: 0.95rem;">Kính chúc từ:</p>
                     <h2 class="modal-sender-name">${data.name}</h2>
                 </div>
                 <div class="modal-message">
@@ -362,7 +369,7 @@
             }
         });
 
-        // PHÁO HOA
+        // PHÁO HOA - Đổi màu pháo hoa tiệp với bảng màu mới
         function fireworks() {
             var duration = 5 * 1000; var animationEnd = Date.now() + duration;
             var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
@@ -371,8 +378,8 @@
                 var timeLeft = animationEnd - Date.now();
                 if (timeLeft <= 0) return clearInterval(interval);
                 var particleCount = 50 * (timeLeft / duration);
-                confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 }, colors: ['#f4e6c3', '#b73229', '#ffffff'] }));
-                confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 }, colors: ['#f4e6c3', '#b73229', '#ffffff'] }));
+                confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 }, colors: ['#c19b6c', '#1b365d', '#ffffff'] }));
+                confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 }, colors: ['#c19b6c', '#1b365d', '#ffffff'] }));
             }, 250);
         }
     </script>
