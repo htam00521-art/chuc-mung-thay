@@ -13,7 +13,7 @@
             margin: 0; padding: 0; width: 100%; height: 100%; 
             font-family: 'Playfair Display', serif; 
             color: #222; overflow-x: hidden; 
-            background-image: url('image_e03b25.png'); /* FILE ẢNH NỀN CỦA NHÓM */
+            background-image: url('image_e03b25.png'); /* ẢNH NỀN BÃI BIỂN */
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -21,7 +21,7 @@
         
         .hidden { display: none !important; }
 
-        /* MÀN HÌNH 1: LỜI CHÚC & PHÁO HOA */
+        /* MÀN HÌNH 1 */
         #intro-screen { 
             height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; 
             background: rgba(0, 0, 0, 0.4); 
@@ -37,14 +37,13 @@
             backdrop-filter: blur(5px);
         }
         .btn:hover:not(:disabled) { background-color: rgba(191, 161, 69, 1); transform: translateY(-2px); }
-        .btn:disabled { background-color: rgba(204, 204, 204, 0.9); cursor: wait; }
+        .btn:disabled { background-color: rgba(204, 204, 204, 0.9); cursor: wait; color: #333; }
 
-        /* MÀN HÌNH 2: CÁC THIỆP */
+        /* MÀN HÌNH 2 */
         #card-screen { min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 40px 20px; background: rgba(0,0,0,0.2); }
         
-        /* HIỆU ỨNG KÍNH MỜ NỔI BẬT CHỮ */
         .glass-effect {
-            background: rgba(255, 255, 255, 0.85); /* Trắng đục hơn để dễ đọc chữ */
+            background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
             border: 2px solid rgba(255, 255, 255, 0.9);
@@ -61,7 +60,7 @@
         #messages-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; width: 100%; max-width: 1000px; margin-top: 20px; opacity: 0; transform: translateY(20px); transition: all 1s ease-in-out; }
         .show-messages { opacity: 1 !important; transform: translateY(0) !important; }
 
-        /* HIỆU ỨNG LẬT THIỆP 3D */
+        /* THIỆP & LẬT 3D */
         .message-card { background-color: transparent; width: 100%; height: 320px; perspective: 1000px; cursor: pointer; position: relative; }
         .card-inner { position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.8s; transform-style: preserve-3d; }
         .message-card.flipped .card-inner { transform: rotateY(180deg); }
@@ -71,7 +70,7 @@
             border-radius: 15px; padding: 20px;
         }
 
-        /* MẶT TRƯỚC CỦA THIỆP */
+        /* MẶT TRƯỚC */
         .card-front {
             display: flex; flex-direction: column; align-items: center; justify-content: center;
             background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7)); 
@@ -81,7 +80,7 @@
         .card-front h3 { margin: 10px 0; font-size: 1.6rem; color: #b73229; text-shadow: 1px 1px 0px #fff; font-weight: bold; }
         .card-front p { margin: 0; font-size: 1rem; color: #333; font-style: italic; font-weight: bold; }
 
-        /* MẶT SAU CỦA THIỆP (NỘI DUNG LỜI CHÚC) */
+        /* MẶT SAU */
         .card-back {
             transform: rotateY(180deg); text-align: justify; display: flex; flex-direction: column;
             background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(255,255,255,0.85));
@@ -94,7 +93,7 @@
         .card-content::-webkit-scrollbar { width: 6px; }
         .card-content::-webkit-scrollbar-thumb { background: #d4af37; border-radius: 3px; }
 
-        /* NÚT XÓA THIỆP (CHỈ HIỆN KHI LÀ ADMIN) */
+        /* NÚT XÓA ADMIN */
         .btn-delete {
             position: absolute; top: -10px; right: -10px; background: #e74c3c; color: white; border: 2px solid white; 
             border-radius: 50%; width: 32px; height: 32px; font-size: 14px; cursor: pointer; z-index: 10;
@@ -109,7 +108,7 @@
         #admin-panel { width: 100%; max-width: 600px; padding: 25px; margin-bottom: 20px; border-radius: 12px; text-align: left; }
         .input-group { margin-bottom: 15px; display: flex; flex-direction: column; }
         .input-group label { margin-bottom: 5px; font-weight: bold; color: #b73229; font-size: 1rem; text-shadow: 1px 1px 0px #fff; }
-        .input-group input[type="text"], .input-group textarea { padding: 12px; border: 2px solid #ccc; border-radius: 6px; font-family: inherit; background: rgba(255,255,255,0.9); font-size: 1rem; color: #111; font-weight: 500;}
+        .input-group input[type="text"], .input-group textarea, .input-group input[type="file"] { padding: 12px; border: 2px solid #ccc; border-radius: 6px; font-family: inherit; background: rgba(255,255,255,0.9); font-size: 1rem; color: #111; font-weight: 500;}
         .input-group input:focus, .input-group textarea:focus { outline: none; border-color: #d4af37; background: #fff; }
     </style>
 </head>
@@ -122,7 +121,7 @@
     </div>
 
     <div id="card-screen" class="hidden">
-        <!-- Khung nhập liệu Admin -->
+        <!-- FORM ADMIN (NÚT CHỌN FILE) -->
         <div id="admin-panel" class="hidden glass-effect">
             <h3 style="color: #b73229; margin-top: 0; text-align: center; text-shadow: 1px 1px 0px #fff;">Khu vực Admin - Thêm thiệp mới</h3>
             <div class="input-group">
@@ -134,15 +133,17 @@
                 <textarea id="sender-message" rows="3" placeholder="Nhập lời chúc..."></textarea>
             </div>
             <div class="input-group">
-                <label>Link ảnh đại diện (Dán link Google Drive vào đây)</label>
-                <input type="text" id="sender-image" placeholder="Ví dụ: https://drive.google.com/file/d/...">
+                <label>Ảnh đại diện (Chọn ảnh từ máy)</label>
+                <!-- Đổi thành nút chọn file -->
+                <input type="file" id="sender-image" accept="image/*">
             </div>
             <div class="input-group">
-                <label>Link file ghi âm (Dán link Google Drive vào đây)</label>
-                <input type="text" id="sender-audio" placeholder="Ví dụ: https://drive.google.com/file/d/...">
+                <label>File ghi âm lời chúc (Chọn file MP3/M4A)</label>
+                <!-- Đổi thành nút chọn file -->
+                <input type="file" id="sender-audio" accept="audio/*">
             </div>
             <div style="text-align: center; margin-top: 20px;">
-                <button class="btn" id="btn-add-message" style="padding: 10px 25px;">Thêm thiệp</button>
+                <button class="btn" id="btn-add-message" style="padding: 10px 25px;">Tải lên & Thêm thiệp</button>
                 <button class="btn" id="btn-logout" style="padding: 10px 25px; background-color: #666; margin-left: 10px; border: none;">Đăng xuất</button>
             </div>
         </div>
@@ -161,8 +162,10 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
         import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
         import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+        // Bổ sung thư viện Storage để tải file
+        import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-storage.js";
 
-        // CẤU HÌNH FIREBASE CỦA BẠN
+        // CẤU HÌNH FIREBASE
         const firebaseConfig = {
             apiKey: "AIzaSyAAIEUHQkiBNB5ma1nLUS3y9dzOyDmhRAM",
             authDomain: "quatangthay.firebaseapp.com",
@@ -176,6 +179,7 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
         const auth = getAuth(app);
+        const storage = getStorage(app); // Khởi tạo Storage
 
         const introScreen = document.getElementById('intro-screen');
         const cardScreen = document.getElementById('card-screen');
@@ -191,20 +195,7 @@
             window.scrollTo(0, 0);
         });
 
-        // HÀM CHUYỂN ĐỔI LINK GOOGLE DRIVE
-        function processLink(url) {
-            if (!url) return "";
-            url = url.trim();
-            const driveRegex = /\/file\/d\/([a-zA-Z0-9_-]+)/;
-            const match = url.match(driveRegex);
-            // Nếu là link Google Drive, chuyển thành link tải trực tiếp (Direct Link)
-            if (match && match[1]) {
-                return `https://drive.google.com/uc?export=download&id=${match[1]}`;
-            }
-            return url;
-        }
-
-        // TẢI DỮ LIỆU TỪ FIREBASE VÀ HIỂN THỊ
+        // HIỂN THỊ DỮ LIỆU
         const q = query(collection(db, "messages"), orderBy("timestamp", "desc"));
         onSnapshot(q, (snapshot) => {
             grid.innerHTML = ""; 
@@ -215,11 +206,9 @@
                 const card = document.createElement('div');
                 card.className = 'message-card';
 
-                // Tạo nút Xóa thiệp
                 const deleteBtn = document.createElement('button');
                 deleteBtn.className = 'btn-delete';
                 deleteBtn.innerHTML = '❌';
-                deleteBtn.title = 'Xóa thiệp này';
                 deleteBtn.addEventListener('click', async (e) => {
                     e.stopPropagation(); 
                     if(confirm(`Bạn có chắc chắn muốn xóa thiệp của "${data.name}" không?`)) {
@@ -229,15 +218,12 @@
                 });
                 card.appendChild(deleteBtn);
 
-                // Lật thiệp khi nhấp chuột
                 card.addEventListener('click', function() { this.classList.toggle('flipped'); });
 
-                // Hiển thị ảnh, nếu ảnh bị lỗi (hoặc không có link) thì hiện biểu tượng 💌
                 let imageHtml = (data.imageUrl && data.imageUrl !== "") 
                     ? `<img src="${data.imageUrl}" class="sender-avatar" alt="Avatar" onerror="this.outerHTML='<span style=\\'font-size: 3rem; margin-bottom: 10px;\\'>💌</span>'">` 
                     : `<span style="font-size: 3rem; margin-bottom: 10px;">💌</span>`;
                 
-                // Hiển thị thanh phát nhạc
                 let audioHtml = (data.audioUrl && data.audioUrl !== "") 
                     ? `<div style="margin-top: 15px; padding-top: 10px; border-top: 1px dashed rgba(0,0,0,0.3);">
                            <audio controls style="width: 100%; height: 40px;" class="audio-player">
@@ -267,7 +253,6 @@
                 card.appendChild(innerDiv);
                 grid.appendChild(card);
 
-                // Chặn không cho thiệp lật khi người dùng bấm nút Play nhạc
                 const audioPlayer = card.querySelector('.audio-player');
                 if (audioPlayer) {
                     audioPlayer.addEventListener('click', (e) => { e.stopPropagation(); });
@@ -275,7 +260,7 @@
             });
         });
 
-        // XỬ LÝ ĐĂNG NHẬP ADMIN
+        // QUẢN LÝ ADMIN
         document.getElementById('admin-toggle').addEventListener('click', () => {
             if (!auth.currentUser) {
                 const email = prompt("Email Admin:");
@@ -283,12 +268,11 @@
                 if(email && password) {
                     signInWithEmailAndPassword(auth, email, password)
                         .then(() => alert("Đã mở khóa Khu vực Admin!"))
-                        .catch(err => alert("Đăng nhập thất bại, vui lòng kiểm tra lại."));
+                        .catch(err => alert("Đăng nhập thất bại!"));
                 }
             }
         });
 
-        // Bật/tắt giao diện Admin dựa trên trạng thái đăng nhập
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 adminPanel.classList.remove('hidden');
@@ -305,44 +289,59 @@
             signOut(auth).then(() => alert("Đã đăng xuất."));
         });
 
-        // XỬ LÝ NÚT THÊM THIỆP
+        // XỬ LÝ UPLOAD FILE LÊN FIREBASE STORAGE
         document.getElementById('btn-add-message').addEventListener('click', async () => {
             const name = document.getElementById('sender-name').value;
             const message = document.getElementById('sender-message').value;
-            // Cho link đi qua hàm processLink để tự động sửa link Google Drive
-            const imageUrl = processLink(document.getElementById('sender-image').value);
-            const audioUrl = processLink(document.getElementById('sender-audio').value);
+            const imageFile = document.getElementById('sender-image').files[0];
+            const audioFile = document.getElementById('sender-audio').files[0];
             
             if(!name || !message) { alert("Vui lòng điền tên và lời chúc!"); return; }
 
             const btn = document.getElementById('btn-add-message');
-            btn.innerText = "Đang tải dữ liệu...";
+            btn.innerText = "Đang tải dữ liệu lên mạng... Vui lòng chờ";
             btn.disabled = true;
 
             try {
+                let finalImageUrl = "";
+                let finalAudioUrl = "";
+
+                // Đẩy file ảnh
+                if (imageFile) {
+                    const imgRef = ref(storage, 'images/' + Date.now() + '_' + imageFile.name);
+                    await uploadBytes(imgRef, imageFile);
+                    finalImageUrl = await getDownloadURL(imgRef);
+                }
+
+                // Đẩy file ghi âm
+                if (audioFile) {
+                    const audRef = ref(storage, 'audio/' + Date.now() + '_' + audioFile.name);
+                    await uploadBytes(audRef, audioFile);
+                    finalAudioUrl = await getDownloadURL(audRef);
+                }
+
+                // Lưu vào Database
                 await addDoc(collection(db, "messages"), { 
                     name: name, 
                     message: message, 
-                    imageUrl: imageUrl,
-                    audioUrl: audioUrl,
+                    imageUrl: finalImageUrl,
+                    audioUrl: finalAudioUrl,
                     timestamp: new Date() 
                 });
 
-                alert("Đã thêm thiệp thành công!");
-                // Làm sạch form
+                alert("Tải lên và thêm thiệp THÀNH CÔNG!");
                 document.getElementById('sender-name').value = '';
                 document.getElementById('sender-message').value = '';
                 document.getElementById('sender-image').value = '';
                 document.getElementById('sender-audio').value = '';
             } catch (e) { 
-                alert("Lỗi khi thêm: " + e.message); 
+                alert("Lỗi khi tải file: " + e.message + "\n(Vui lòng kiểm tra lại quyền Storage trong Firebase)"); 
             } finally {
-                btn.innerText = "Thêm thiệp";
+                btn.innerText = "Tải lên & Thêm thiệp";
                 btn.disabled = false;
             }
         });
 
-        // HÀM HIỆU ỨNG PHÁO HOA
         function fireworks() {
             var duration = 5 * 1000; var animationEnd = Date.now() + duration;
             var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
